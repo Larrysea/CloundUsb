@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_marginLeft="45dp"
+    android:layout_marginRight="45dp"
+    android:layout_marginTop="20dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView android:layout_width="match_parent"
+
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:text="@string/property"/>
+    <RelativeLayout
+        android:padding= "10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+     >
+        <TextView
+            style="@style/property_tag"
+            android:id="@+id/property_dialog_name_tag"
+            android:text="@string/filename"
+            android:textColor="@color/black"
+            />
+        <TextView
+            android:id="@+id/property_name_tv"
+            style="@style/property_tag"
+            android:layout_toEndOf="@+id/property_dialog_name_tag"
+            />
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:padding= "10dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/property_dialog_type_tag"
+            style="@style/property_tag"
+            android:layout_centerVertical="true"
+            android:text="@string/filetype"
+            android:textColor="@color/black"
+            />
+
+        <TextView
+            style="@style/property_tag"
+            android:id="@+id/property_type_tv"
+            android:layout_toEndOf="@+id/property_dialog_type_tag"
+            />
+
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:padding="10dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/property_dialog_version_tag"
+            style="@style/property_tag"
+            android:layout_centerVertical="true"
+            android:text="@string/filesize"
+            android:textColor="@color/black"
+            />
+
+        <TextView
+            style="@style/property_tag"
+            android:id="@+id/property_filesize_tv"
+            android:layout_toEndOf="@+id/property_dialog_version_tag"
+            />
+
+
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:padding= "10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/context_menu_dialog_rename"
+            style="@style/property_tag"
+            android:layout_centerVertical="true"
+            android:text="@string/filepath"
+            android:textColor="@color/black"
+           />
+        <TextView
+            android:id="@+id/property_filepath_tv"
+           android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:minLines="1"
+            android:maxLines="2"
+            android:layout_toEndOf="@+id/property_dialog_version_tag"
+            />
+
+
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

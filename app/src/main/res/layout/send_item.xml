@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?><!--显示发送文件进度的xml-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="30dp">
+
+    <ImageView
+        android:id="@+id/send_child_item_imageview"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/send_progress_portrait_item"
+        android:scaleType="fitXY" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/send_child_item_imageview"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/send_fragment_name_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/send_item_total_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/send_item_progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/linearLayout"
+        android:layout_marginTop="40dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/send_item_progressBar"
+        android:background="@drawable/open_file_bg"
+        android:text="@string/open"
+        android:visibility="gone"
+        android:id="@+id/send_progress_open_file"
+        android:textColor="@color/white" />
+
+
+</RelativeLayout>

@@ -1,0 +1,106 @@
+<resources>
+    <string name="app_name">携传</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="shareReason">这是个很酷的应用你会喜欢它的,下载戳这里：http://www.aceclound.cn/aceclound/apk/android.apk</string>
+    <string name="shareTomyFrinend">分享给我的朋友</string>
+    <string-array name="slidingTablayoutTitle">
+        <item>应用</item>
+        <item>图片</item>
+        <item>视频</item>
+        <item>音乐</item>
+        <item>文件</item>
+    </string-array>
+    <string name="noMusicContentInfor"> 暂时没有找到你的音乐偶！ </string>
+    <string name="noVideoContentInfor"> 暂时没有找到你的视频偶！ </string>
+    <string name="application">应用</string>
+    <string name="video">视频</string>
+    <string name="music">音乐</string>
+    <string name="picture">图片</string>
+    <string name="phone_rom">手机内存</string>
+    <string name="sdcard">SD卡</string>
+    <string name="document">文档</string>
+    <string name="zipfile">压缩文件</string>
+    <string name="sort_by_type"> | 按文件类型分类</string>
+    <string name="sort_by_file_path"> | 按文路径分类</string>
+    <string name="file_unit">项</string>
+    <string name="ebook">电子书</string>
+    <string name="feedback_hint">告诉我你在使用中不爽的地方，让我们把它变的更好！</string>
+    <string name="submit_feed">发给我</string>
+    <string name="setting">设置</string>
+    <string name="feedback">反馈</string>
+    <string name="exit">退出</string>
+    <string name="share">分享</string>
+    <string name="checkUsb">查看u盘</string>
+    <string name="choose_default_path">选择默认路径</string>
+    <string name="help_document">帮助文档</string>
+    <string name="about_infor">关于携传</string>
+    <string name="no_file_infor">没有文件哦</string>
+    <string name="chech_history">查看历史</string>
+    <string name="login">立即登录</string>
+    <string name="login_infor">登录携传\n立即使用你的云USB</string>
+    <string name="tip_input_phone">请输入您的账号</string>
+    <string name="tip_input_number">请输入您的密码</string>
+    <string name="register">注册</string>
+    <string name="scanqr">扫描</string>
+    <string name="appinfor">版本1.0\n加速器团队作品</string>
+    <string name="checkupdate">检查更新</string>
+    <string name="default_path">默认路径</string>
+    <string name="internal_path">内部存储</string>
+    <string name="external_path">SD卡存储</string>
+    <string name="cancle">取消</string>
+    <string name="no_account_info">这个账户还没有注册，现在注册一个吧！</string>
+    <string name="save">保存</string>
+    <string name="other">其它</string>
+    <string name="apk">.apk</string>
+    <string name="tip_input_name">请填写姓名</string>
+    <string name="copy">复制</string>
+    <string name="paste">粘贴</string>
+    <string name="rename">重命名</string>
+    <string name="delete">删除</string>
+
+    <string name="filetype">类型 :</string>
+    <string name="property">属性 </string>
+    <string name="filename">名称 :</string>
+    <string name="filesize">大小 :</string>
+    <string name="filepath">位置 :</string>
+    <string name="pastetopath">粘贴到此处</string>
+    <string name="name">名称</string>
+    <string name="local_file">本地文件</string>
+    <string name="receive_history">接收</string>
+    <string name="send_history">发送</string>
+    <string name="opne">打开</string>
+    <string name="revoke">撤销</string>
+    <string name="delete_history">清空记录</string>
+    <string name="folder">文件夹</string>
+    <string name="sure">确认</string>
+    <string name="cancel">取消</string>
+    <string name="tipinputFilename">请输入文件名</string>
+    <string name="file">文件</string>
+    <string name="diretory">文件夹</string>
+    <string name="tip_is_last_version">这是最新版本</string>
+    <string name="tip_checking_version">正在获取最新版本信息</string>
+    <string name="tip_input_email_ad">请输入邮箱</string>
+    <string name="clound_usb">云USB</string>
+    <string name="exit_infor">再按一次推出程序</string>
+    <string name="tip_person_infor">个人信息已修改</string>
+    <string name="login_tip">登录</string>
+    <string name="sending">发送文件</string>
+    <string name="send_progress">进度</string>
+    <string name="no_doc_tip">暂时没有帮助文档</string>
+    <string name="thanks_you_feedback">感谢您的反馈！</string>
+    <string name="open">打开</string>
+    <string name="scan_qr">二维码</string>
+    <string name="send_to">发送给</string>
+    <string name="click_cancel">点击取消</string>
+    <string name="sync_picture">同步照片</string>
+    <string name="choose_sync_time_range">选择同步时间范围</string>
+    <string name="tip_enter_picture_sync">请好友扫码加入</string>
+    <string name="scan_qr_sync">扫码连接</string>
+    <string name="start_sync_picture">开始同步</string>
+    <string name="upload_file">上传</string>
+
+
+
+</resources>

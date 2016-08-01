@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android_custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:keepScreenOn="true"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/sync_picture_activity_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        android:background="?attr/colorPrimary"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+
+
+    <com.larry.cloundusb.cloundusb.view.RoundPB
+        android:id="@+id/activity_sync_picture_round_pb"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android_custom:centerIcon="@mipmap/ic_open_wifi"
+        android_custom:counterClickWise="true"
+        android_custom:startPoint="0"
+        android_custom:roundColor="@android:color/white"
+        android_custom:roundProgressColor="@android:color/holo_orange_dark"
+        android_custom:roundWidth="5dp"
+
+
+        />
+
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/qr_activity_linearlayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:background="@drawable/qr_bg_corner">
+
+        <ImageView
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/activity_sync_imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/activity_sync_start_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:visibility="gone"
+      android:text="@string/start_sync_picture"
+        />
+
+    <TextView
+        android:id="@+id/activity_sync_picture_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="@string/tip_enter_picture_sync"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:visibility="gone"
+        android:layout_alignBottom="@+id/qr_activity_linearlayout"
+        android:layout_centerHorizontal="true" />
+
+
+</RelativeLayout>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="5dp"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <ImageView android:id="@+id/choose_file_fragment_item_imageview"
+        android:layout_height="50dp"
+        android:layout_width="50dp"
+        android:layout_alignParentLeft="true"
+        />
+
+
+        <TextView android:id="@+id/choose_file_fragment_item_name_textview"
+            android:layout_width="wrap_content"
+            android:textSize="15sp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:layout_toRightOf="@+id/choose_file_fragment_item_imageview"
+            android:layout_marginLeft="10dp"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView android:id="@+id/choose_file_fragment_item_size_textview"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black"
+            android:layout_below="@+id/choose_file_fragment_item_name_textview"
+            android:layout_toRightOf="@+id/choose_file_fragment_item_imageview"
+            android:layout_marginLeft="10dp"
+            android:layout_height="wrap_content"/>
+
+    <CheckBox
+        android:id="@+id/choose_file_fragment_item_checkbox"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/parent_picture_item"
+
+        android:layout_centerVertical="true"
+        android:button="@null"
+        />
+     <View android:layout_width="wrap_content"
+         android:layout_height="1dp"
+         android:background="@color/testgray"
+         android:layout_toEndOf="@+id/choose_file_fragment_item_size_textview"
+         android:layout_alignParentBottom="true"
+         android:layout_alignLeft="@+id/choose_file_fragment_item_name_textview"/>
+
+</RelativeLayout>

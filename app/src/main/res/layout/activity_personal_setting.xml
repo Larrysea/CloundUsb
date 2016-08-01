@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/personal_setting_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    <ImageView android:id="@+id/personal_setting_portrait"
+        android:layout_height="80dp"
+        android:layout_width="80dp"
+        android:layout_below="@+id/personal_setting_toolbar"
+        android:layout_marginTop="20dp"
+
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        />
+    <EditText
+
+        android:layout_below="@+id/personal_setting_portrait"
+        android:layout_width="100dp"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textSize="16sp"
+
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/personal_setting_name"/>
+
+    <LinearLayout android:id="@+id/personal_setting_linearlaytout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/personal_setting_name"
+        android:layout_marginTop="20dp"
+        android:gravity="center">
+
+            <ImageView
+                android:id="@+id/activity_personal_image1"
+                android:paddingTop="20dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:src="@mipmap/portrait1"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/activity_personal_image2"
+                android:scaleType="fitCenter"
+                android:paddingTop="20dp"
+                android:src="@mipmap/portrait2"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:id="@+id/activity_personal_image3"
+                android:paddingTop="20dp"
+                android:src="@mipmap/portrait3"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:id="@+id/activity_personal_image4"
+                android:paddingTop="20dp"
+                android:src="@mipmap/portrait4"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+
+                android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/personal_setting_linearlaytout1"
+        android:layout_marginTop="20dp"
+        android:gravity="center">
+
+            <ImageView
+                android:id="@+id/activity_personal_image5"
+                android:paddingTop="30dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:src="@mipmap/portrait5"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/activity_personal_image6"
+                android:paddingTop="30dp"
+                android:src="@mipmap/portrait6"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:id="@+id/activity_personal_image7"
+                android:paddingTop="30dp"
+                android:src="@mipmap/portrait7"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:id="@+id/activity_personal_image8"
+                android:paddingTop="30dp"
+                android:src="@mipmap/portrait8"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:layout_height="wrap_content"/>
+
+
+       </LinearLayout>
+
+
+
+
+        <LinearLayout android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="bottom"
+            android:layout_alignParentBottom="true"
+            android:layout_height="wrap_content">
+    <Button android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/top"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="@string/cancle"
+        android:onClick="personal_cancel"
+        android:layout_height="wrap_content"/>
+
+    <Button android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/top"
+        android:text="@string/save"
+        android:padding="15dp"
+        android:gravity="center"
+        android:onClick="personal_save"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right" />
+ </LinearLayout>
+</RelativeLayout>

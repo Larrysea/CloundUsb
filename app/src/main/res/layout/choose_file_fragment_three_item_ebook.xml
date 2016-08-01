@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/choose_file_fragment_ebook_linearlayout"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="10dp"
+    android:layout_weight="1"
+    android:paddingLeft="20dp"
+    android:paddingBottom="20dp"
+    android:paddingRight="20dp"
+    >
+    <ImageView android:id="@+id/choose_file_fragment_item_ebook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/content_category_file_ebook_icon"
+        />
+    <TextView android:id="@+id/choose_file_fragment_document_type_name"
+        android:layout_below="@+id/choose_file_fragment_item_ebook"
+        android:text="@string/ebook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        />
+    <TextView android:layout_width="wrap_content"
+        android:id="@+id/choose_file_fragment_ebook_amount_textview"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/choose_file_fragment_ebook_type_name"/>
+
+</LinearLayout>
+

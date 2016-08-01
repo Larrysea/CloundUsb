@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="10dp"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView android:id="@+id/select_contact_child_item_imageview"
+        android:layout_height="70dp"
+        android:layout_width="70dp"
+
+        />
+
+        <TextView android:id="@+id/select_contact_fragment_name_textview"
+            android:layout_width="wrap_content"
+            android:textStyle="bold"
+            android:textSize="18sp"
+
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:layout_marginLeft="50dp"
+            android:layout_height="wrap_content"/>
+
+</LinearLayout>

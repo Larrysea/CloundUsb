@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingBottom="20dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="15dp">
+
+
+    <ImageView
+        android:id="@+id/receive_history_portrait_iv"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+    <TextView android:id="@+id/receive_history_sender_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/receive_history_portrait_iv"
+        android:layout_height="wrap_content"
+        android:text="larry"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:textSize="13sp"
+        android:layout_alignStart="@id/receive_history_portrait_iv"
+        android:layout_alignEnd="@+id/receive_history_portrait_iv"
+        />
+
+    <TextView android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="--06月07日--"
+        android:gravity="center"
+        android:id="@+id/receive_history_time_tv"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="120dp"
+        android:background="@mipmap/receive_background_ic"
+        android:layout_below="@+id/send_history_time_tv"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp"
+        android:layout_toStartOf="@+id/receive_history_portrait_iv">
+
+        <ImageView
+            android:id="@+id/receive_history_file_thumb"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_toRightOf="@+id/check_usb_imageview"
+            android:src="@mipmap/ic_launcher"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+
+        <TextView
+            android:id="@+id/receive_history_file_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+
+            android:text="@string/about_infor"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:layout_alignTop="@+id/receive_history_file_thumb"
+            android:layout_toEndOf="@+id/receive_history_file_thumb" />
+
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/check_history_corner_button"
+            android:text="@string/opne"
+            android:layout_marginEnd="15dp"
+            android:layout_alignParentEnd="true"
+            android:textSize="13sp"
+            android:textColor="@color/white"
+            android:id="@+id/receive_history_open_button"
+            android:layout_alignBottom="@+id/receive_history_file_size_tv"
+          />
+
+        <TextView
+            android:id="@+id/receive_history_file_size_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="23mb"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:layout_alignBottom="@+id/receive_history_file_thumb"
+            android:layout_alignStart="@+id/receive_history_file_name_tv" />
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

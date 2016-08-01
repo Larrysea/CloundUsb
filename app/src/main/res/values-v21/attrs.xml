@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RoundProgressBar">
+        <attr name="roundColor"			format="color"/>
+        <attr name="roundProgressColor" format="color"/>
+        <attr name="roundWidth" 		format="dimension"/>
+        <attr name="max" 				format="integer"/>
+        <attr name="clockWise"			format="boolean"/><!-- 顺时针转动 -->
+        <attr name="counterClickWise"	format="boolean"/><!-- 逆时针转动 -->
+        <attr name="startPoint"			format="integer"/><!-- 开始的点 -->
+        <attr name="centerIcon"			format="reference"/><!-- 添加图片 -->
+        <attr name="style">
+            <enum name="STROKE" value="0"/>
+            <enum name="FILL"   value="1"/>
+        </attr>
+    </declare-styleable>
+</resources>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.larry.cloundusb">
+
+    <application
+        android:name=".cloundusb.application.GetContextUtil"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">   <!--   name 将此类声明为系统的类-->
+        <activity
+            android:launchMode="singleInstance"
+            android:name=".cloundusb.activity.MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+
+            </intent-filter>
+        </activity>
+        <activity android:name=".cloundusb.activity.SendFileActivity" />       <!--发送文件类-->
+        <activity android:name=".cloundusb.testactivity.ClientActivity" />
+        <activity android:name=".cloundusb.activity.SendProgressActivity"
+            android:launchMode="singleInstance"/>   <!--显示文件进度类-->
+        <activity android:name=".cloundusb.activity.SelectContactActivity" />   <!--  选择联系人发送-->
+        <activity
+            android:name=".cloundusb.activity.FeedBackActivitiy"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".cloundusb.activity.SettingActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".cloundusb.activity.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".cloundusb.activity.RegisterActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <service android:name=".cloundusb.service.CheckNetWorkStateServices" />  <!--检查网络服务-->
+        <activity
+            android:name=".cloundusb.activity.InforActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".cloundusb.qractivity.CaptureActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+        <activity android:name=".cloundusb.qractivity.ResultActivity" />
+        <activity
+            android:name=".cloundusb.activity.PersonalSettingActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".cloundusb.activity.CheckUsbActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".cloundusb.activity.CopyFileActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".cloundusb.activity.CheckHistoryActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+        <activity android:name=".cloundusb.activity.SyncPictureActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".cloundusb.activity.SyncProgressActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+    </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:required="true" />
+    <uses-permission
+        android:name="android.permission.ACCESS_WIFI_STATE"
+        android:required="true" />
+    <uses-permission
+        android:name="android.permission.CHANGE_WIFI_STATE"
+        android:required="true" />
+    <uses-permission
+        android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"
+        android:required="true" />
+    <uses-permission
+        android:name="android.permission.CHANGE_NETWORK_STATE"
+        android:required="true" />
+    <uses-permission
+        android:name="android.permission.ACCESS_NETWORK_STATE"
+        android:required="true" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        android:required="true" />  <!--删除文件夹权限、创建权限-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+
+</manifest>

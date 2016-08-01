@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="wrap_content"
+     android:padding="2dp"
+    android:layout_height="wrap_content">
+  <ImageView android:id="@+id/picture_child_item_image_view"
+      android:layout_width="125dp"
+      android:layout_height="125dp"
+      android:scaleType="fitXY"
+
+      />
+
+    <CheckBox
+        android:id="@+id/picture_child_item_check_box"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_gravity="right"
+        android:button="@null"
+        android:background="@drawable/child_picture_checkbox"/>
+
+</FrameLayout>

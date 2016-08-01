@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/choose_file_fragment_container"
+    android:orientation="vertical">
+
+    <LinearLayout android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:id="@+id/choose_file_fragment_linearlayout"
+        android:layout_height="0dp">
+   <FrameLayout android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:text="@string/sort_by_type" />
+
+    <include layout="@layout/choose_file_fragment_phone_item" />
+
+    <include layout="@layout/choose_file_fragment_card_item" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:text="@string/sort_by_file_path" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/gray" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <include layout="@layout/choose_file_fragment_three_item_document" />
+
+        <include layout="@layout/choose_file_fragment_three_item_zip" />
+
+        <include layout="@layout/choose_file_fragment_three_item_ebook" />
+    </LinearLayout>
+        </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/white"
+    android:id="@+id/choose_file_fragment_card_linearlayout"
+
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <ImageView android:id="@+id/choose_file_fragment_imageview_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:src="@mipmap/content_category_file_sdcard_icon"/>
+        <TextView android:id="@+id/choose_file_fragment_textview__card_memory_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sdcard"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_toRightOf="@id/choose_file_fragment_imageview_card"
+            />
+        <TextView android:id="@+id/choose_file_fragment_card_memory_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginRight="30dp"
+            android:layout_alignParentRight="true"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/content_category_file_arrow_icon"
+            android:layout_centerVertical="true"
+            />
+        <ProgressBar
+            style="?android:progressBarStyleHorizontal"
+            android:id="@+id/choose_file_fragment_card_progressbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/choose_file_fragment_textview__card_memory_name"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+
+            android:layout_alignLeft="@id/choose_file_fragment_textview__card_memory_name"
+            android:layout_alignRight="@+id/choose_file_fragment_card_memory_rate"
+            />
+
+    </RelativeLayout>
+
+</LinearLayout>

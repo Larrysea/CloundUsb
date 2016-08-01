@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <stroke android:width="0.5dp"
+        android:color="@color/white"/>
+    <corners
+        android:radius="1dp"/>
+    <padding android:left="30dp"
+        android:right="30dp"/>
+    <size android:width="@dimen/place_autocomplete_button_padding"
+        android:height="@dimen/place_autocomplete_button_padding"/>
+
+</shape>

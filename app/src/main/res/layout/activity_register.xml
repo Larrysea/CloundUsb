@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/register_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+       android:gravity="center"
+       android:layout_marginTop="50dp"
+        >
+        <ImageView android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:src="@mipmap/login_mobile"/>
+        <EditText android:id="@+id/editetextName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/tip_input_phone"
+            android:paddingTop="10dp"
+            android:textSize="14sp"
+            android:layout_weight="0.8"/>
+        <ImageView android:layout_width="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/deleteNumber"
+            android:src="@mipmap/password_delete"/>
+        </LinearLayout>
+
+
+
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:paddingTop="10dp"
+        android:gravity="center"
+        android:paddingBottom="10dp"
+        >
+        <ImageView android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+
+            android:src="@mipmap/login_password"/>
+        <EditText android:id="@+id/editetextPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:textSize="14sp"
+            android:hint="@string/tip_input_number"
+            android:layout_marginRight="10dp"
+            android:layout_weight="0.8"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/register_infor_tv"
+        android:visibility="invisible"
+        android:padding="10dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/no_account_info"
+        />
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="16sp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:elevation="4dp"
+        android:background="@drawable/register_button_bg"
+        android:textColor="@android:color/holo_red_light"
+        android:text="@string/login"/>
+
+
+
+</LinearLayout>

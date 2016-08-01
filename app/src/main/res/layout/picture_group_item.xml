@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/picture_relativetlayout"
+    android:padding="15dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <ImageView android:id="@+id/picture_fragment_imageview"
+        android:layout_height="70dp"
+        android:layout_width="70dp"
+        android:layout_alignParentLeft="true"
+
+
+        />
+
+    <LinearLayout android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/picture_fragment_imageview"
+        >
+    <TextView android:id="@+id/picutre_fragment_name_textview"
+        android:layout_width="wrap_content"
+
+        android:textSize="18sp"
+        android:textColor="@color/black"
+
+        android:layout_height="wrap_content"/>
+
+
+        <TextView android:id="@+id/picutre_fragment_count_textview"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="5dp"
+
+
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+
+    <CheckBox
+        android:id="@+id/picture_fragment_selected_button"
+        android:layout_alignParentRight="true"
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        android:background="@drawable/parent_picture_item"
+        android:layout_centerVertical="true"
+        android:button="@null"
+        />
+
+
+</RelativeLayout>
