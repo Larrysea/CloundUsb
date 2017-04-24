@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion '24.0.0'
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
     useLibrary 'org.apache.http.legacy'
     packagingOptions {
         exclude 'META-INF/services/javax.annotation.processing.Processor'
@@ -10,12 +10,12 @@ android {
     dexOptions {
         preDexLibraries = false
         javaMaxHeapSize "4g"   //这个改大
-        incremental true
+
     }
     defaultConfig {
         applicationId "com.larry.cloundusb"
-        minSdkVersion 16
-        targetSdkVersion 20
+        minSdkVersion 17
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         multiDexEnabled true

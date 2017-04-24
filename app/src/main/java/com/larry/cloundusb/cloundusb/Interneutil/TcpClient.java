@@ -1,7 +1,5 @@
 package com.larry.cloundusb.cloundusb.Interneutil;
 
-import android.database.sqlite.SQLiteDatabase;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,11 +7,9 @@ import android.util.Log;
 
 import com.larry.cloundusb.cloundusb.activity.MainActivity;
 import com.larry.cloundusb.cloundusb.activity.SendProgressActivity;
-
 import com.larry.cloundusb.cloundusb.appinterface.updateProgressbarInterface;
 import com.larry.cloundusb.cloundusb.application.GetContextUtil;
 import com.larry.cloundusb.cloundusb.baseclass.FileHistoryInfo;
-import com.larry.cloundusb.cloundusb.baseclass.SendContactInfo;
 import com.larry.cloundusb.cloundusb.baseclass.SendFileInform;
 import com.larry.cloundusb.cloundusb.database.DB_AceClound;
 import com.larry.cloundusb.cloundusb.fileutil.FileBox;
@@ -27,12 +23,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 
@@ -115,7 +109,6 @@ public class TcpClient implements Runnable {
         SendProgressActivity.setStartReceive(new SendProgressActivity.startReceiveIn() {
             @Override
             public void receive(int filePosition) {
-
 
 
             }
@@ -252,6 +245,9 @@ public class TcpClient implements Runnable {
     * */
     public void sendFileInform(OutputStream outputStream, int filePosition) {
 
+        if (filePosition > FileBox.getInstance().getSendList().size() || filePosition < 0) {
+            return;
+        }
         SendFileInform sendFileInform = FileBox.getInstance().getSendList().get(filePosition);
         {
             if (filePosition == 0) {
@@ -310,12 +306,10 @@ public class TcpClient implements Runnable {
                     } else if (protocol.substring(0, 9).equals("sure_link")) {
                         String myInfor;
                         if (MainActivity.user.isLogin()) {
-                            if(MainActivity.user.getName().trim().equals(""))
-                            {
+                            if (MainActivity.user.getName().trim().equals("")) {
 
-                                myInfor = "_send_user_name" +"xiechuan"+ MainActivity.user.getPortraitId() + "0|";
-                            }else
-                            {
+                                myInfor = "_send_user_name" + "xiechuan" + MainActivity.user.getPortraitId() + "0|";
+                            } else {
                                 myInfor = "_send_user_name" + MainActivity.user.getName() + MainActivity.user.getPortraitId() + "0|";
                             }
                         } else {
@@ -374,8 +368,7 @@ public class TcpClient implements Runnable {
 
                 } else {//正式接收文件
                     now_recv_length += receiveLength;
-                    if(filePosition>0)
-                    {
+                    if (filePosition > 0) {
                         mupdateNextProgressbar.updateNextProgressbar();
                     }
                     if (FileUtil.copyFile(buffer, tempFile, receiveLength, now_recv_length)) {
@@ -394,7 +387,7 @@ public class TcpClient implements Runnable {
             }
 
         } catch (IOException e) {
-            Log.e(TAG,e.getMessage());
+            Log.e(TAG, e.getMessage());
         }
 
 
@@ -428,12 +421,9 @@ public class TcpClient implements Runnable {
             if (WifiUtil.readClientList() != null && WifiUtil.readClientList().size() > 0) {
                 ip = UdpReceive.getSendContactInforList().get(0).getIpAddress();
             }
-        }
-        else if(fromtype==4)
-        {
-            ip="192.168.43.61";
-        }else  if(fromtype==2)
-        {
+        } else if (fromtype == 4) {
+            ip = "192.168.43.61";
+        } else if (fromtype == 2) {
             ip = UdpReceive.getSendContactInforList().get(0).getIpAddress();
         }
         try {
@@ -447,8 +437,7 @@ public class TcpClient implements Runnable {
     }
 
 
-   public  interface updateProgressbar
-    {
+    public interface updateProgressbar {
 
         void updateNextProgressbar();
     }
@@ -457,9 +446,8 @@ public class TcpClient implements Runnable {
     * 更新下一个progressbar
     *
     * */
-    static public void setUpdateProgressbar(updateProgressbar updateProgressbar)
-    {
-        mupdateNextProgressbar=updateProgressbar;
+    static public void setUpdateProgressbar(updateProgressbar updateProgressbar) {
+        mupdateNextProgressbar = updateProgressbar;
 
 
     }

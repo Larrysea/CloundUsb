@@ -1,18 +1,15 @@
 package com.larry.cloundusb.cloundusb.view;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.github.florent37.viewanimator.AnimationListener;
 import com.github.florent37.viewanimator.ViewAnimator;
 import com.larry.cloundusb.R;
-import com.larry.cloundusb.cloundusb.activity.SyncPictureActivity;
 
 import cn.qqtheme.framework.picker.NumberPicker;
 
@@ -34,7 +31,7 @@ public class SyncTimePicker extends NumberPicker {
 
     }
 
-    @Override
+   /* @Override
     public void show() {
         super.show();
         ViewAnimator.animate(getRootView())
@@ -42,7 +39,7 @@ public class SyncTimePicker extends NumberPicker {
                 .interpolator(new AccelerateInterpolator())
                 .slideBottom()
                 .start();
-    }
+    }*/
 
     @Override
     public void dismiss() {

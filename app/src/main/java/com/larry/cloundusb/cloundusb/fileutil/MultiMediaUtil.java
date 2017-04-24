@@ -1,5 +1,6 @@
 package com.larry.cloundusb.cloundusb.fileutil;
 
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
@@ -305,7 +306,6 @@ public class MultiMediaUtil {
         // 文档类型文件 ppt docx pdf  doc xls
         //压缩文件类型 zip iso
         //电子书类型文件 txt
-        ContextCompat contextCompat = new ContextCompat();
         if (docInformList == null || zipInformList == null || ebookInformList == null) {
             docInformList = new ArrayList<SendFileInform>();
             zipInformList = new ArrayList<SendFileInform>();
@@ -326,7 +326,7 @@ public class MultiMediaUtil {
                         sendFileInform.setFilesize(temp.length());
                         sendFileInform.setFile(true);
                         sendFileInform.setType(GetContextUtil.getInstance().getString(R.string.document));
-                        sendFileInform.setPortrait(GraphicsUtil.drawableToBitmap(FileUtil.initDrawable(contextCompat, false)));
+                        sendFileInform.setPortrait(GraphicsUtil.drawableToBitmap(FileUtil.initDrawable(false)));
                         docInformList.add(sendFileInform);
                     } else if (temp.getName().endsWith("zip") || temp.getName().endsWith("iso")) {
                         SendFileInform sendFileInform = new SendFileInform();
@@ -335,7 +335,7 @@ public class MultiMediaUtil {
                         sendFileInform.setFilesize(temp.length());
                         sendFileInform.setType(GetContextUtil.getInstance().getString(R.string.zipfile));
                         sendFileInform.setFile(true);
-                        sendFileInform.setPortrait(GraphicsUtil.drawableToBitmap(FileUtil.initDrawable(contextCompat, false)));
+                        sendFileInform.setPortrait(GraphicsUtil.drawableToBitmap(FileUtil.initDrawable(false)));
                         zipInformList.add(sendFileInform);
                     } else if (temp.getName().endsWith("txt")) {
                         SendFileInform sendFileInform = new SendFileInform();
@@ -344,7 +344,7 @@ public class MultiMediaUtil {
                         sendFileInform.setFilesize(temp.length());
                         sendFileInform.setFile(true);
                         sendFileInform.setType(GetContextUtil.getInstance().getString(R.string.ebook));
-                        sendFileInform.setPortrait(GraphicsUtil.drawableToBitmap(FileUtil.initDrawable(contextCompat, false)));
+                        sendFileInform.setPortrait(GraphicsUtil.drawableToBitmap(FileUtil.initDrawable(false)));
                         ebookInformList.add(sendFileInform);
                     }
                 }

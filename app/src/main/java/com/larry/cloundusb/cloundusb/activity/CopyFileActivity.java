@@ -4,7 +4,7 @@ import android.app.ProgressDialog;
 import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.FileUtils;
+
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -28,7 +28,10 @@ import com.larry.cloundusb.cloundusb.fileutil.FileUtil;
 import com.larry.cloundusb.cloundusb.fragment.CopyFileFragment;
 import com.larry.cloundusb.cloundusb.fragment.FileChooserPathFragment;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -97,10 +100,13 @@ public class CopyFileActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_paste) {
-        if( FileUtils.copyFile(new File(CopyFileUtil.getMcopyFile()),new File(FileChoosePathFragment.nowPath)))
-        {
-            Toast.makeText(this,"复制文件成功",Toast.LENGTH_SHORT).show();
-        }
+
+                if( android.os.FileUtils.copyFile(new File(CopyFileUtil.getMcopyFile()),new File(FileChoosePathFragment.nowPath)))
+                {
+                    Toast.makeText(this,"复制文件成功",Toast.LENGTH_SHORT).show();
+                }
+
+
         }
 
         return true;

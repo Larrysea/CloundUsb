@@ -93,7 +93,8 @@ public class SyncPictureActivity extends AppCompatActivity {
                         }
                     });
                     try {
-                        imageView.setImageBitmap(create2DCode(wifiName + "]http://www.aceclound.cn/aceclound/apk/android.apkhttp://www.aceclound.cn/aceclound/apk/android.apk", CommonUtil.getScreenSizeOfDevice2(msyncPictureActivity)));  //设置二维码
+                        imageView.setImageBitmap(create2DCode("三桥|北大街|5",CommonUtil.getScreenSizeOfDevice2(SyncPictureActivity.this)));
+                       // imageView.setImageBitmap(create2DCode(wifiName + "]http://www.aceclound.cn/aceclound/apk/android.apkhttp://www.aceclound.cn/aceclound/apk/android.apk", CommonUtil.getScreenSizeOfDevice2(msyncPictureActivity)));  //设置二维码
 
                     } catch (com.google.zxing.WriterException e) {
 

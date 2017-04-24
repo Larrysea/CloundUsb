@@ -1,23 +1,18 @@
 package com.larry.cloundusb.cloundusb.activity;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
-import android.os.Process;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.EventLog;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.TextView;
 
 import com.larry.cloundusb.R;
@@ -25,12 +20,10 @@ import com.larry.cloundusb.cloundusb.Interneutil.InternetTool;
 import com.larry.cloundusb.cloundusb.Interneutil.TcpClient;
 import com.larry.cloundusb.cloundusb.Interneutil.TcpServer;
 import com.larry.cloundusb.cloundusb.Interneutil.UdpReceive;
-import com.larry.cloundusb.cloundusb.Interneutil.WifiUtil;
 import com.larry.cloundusb.cloundusb.adapter.SendProgressAdapter;
 import com.larry.cloundusb.cloundusb.appinterface.recyclerviewClickListener;
 import com.larry.cloundusb.cloundusb.appinterface.updateProgressbarInterface;
 import com.larry.cloundusb.cloundusb.application.GetContextUtil;
-import com.larry.cloundusb.cloundusb.baseclass.SendContactInfo;
 import com.larry.cloundusb.cloundusb.baseclass.SendFileInform;
 import com.larry.cloundusb.cloundusb.fileutil.FileBox;
 import com.larry.cloundusb.cloundusb.fileutil.FileUtil;
@@ -40,8 +33,6 @@ import com.larry.cloundusb.cloundusb.service.CheckNetWorkStateServices;
 import com.larry.cloundusb.cloundusb.util.DividerItemDecoration;
 
 import java.io.File;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -77,7 +68,7 @@ public class SendProgressActivity extends AppCompatActivity implements ParentFra
             switch (msg.what) {
 
                 case 2:
-                    speedTv.setText( NetSpeedResult[0] + " MB/s 剩余 " + NetSpeedResult[1] + " s");
+                    speedTv.setText(NetSpeedResult[0] + " MB/s 剩余 " + NetSpeedResult[1] + " s");
                     break;
                 case 3:
                     speedTv.setText("发送成功");
@@ -109,7 +100,7 @@ public class SendProgressActivity extends AppCompatActivity implements ParentFra
     @Override
     public void onCreate(Bundle savedinstance) {
         super.onCreate(savedinstance);
-        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+       // supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_send);
         initCompanet();
         Log.e(TAG, "显示静茹了send pro oncereate");
@@ -133,13 +124,12 @@ public class SendProgressActivity extends AppCompatActivity implements ParentFra
         toolbar.setNavigationIcon(R.mipmap.arrow_back_white_small);
         setSupportActionBar(toolbar);
         speedTv = (TextView) findViewById(R.id.send_activity_toolbar_tv);
-        setSupportActionBar(toolbar);
         judgeFrom(getIntent().getExtras().getInt("type"));
         if (sourcceType == 1 || sourcceType == 3) {
             withdrawtv.setVisibility(View.VISIBLE);
             if (sourcceType == 1) {
 
-                withdrawtv.setText(GetContextUtil.getInstance().getString(R.string.send_to) +UdpReceive.getSendContactInforList().get(0).getName() + " " +
+                withdrawtv.setText(GetContextUtil.getInstance().getString(R.string.send_to) + UdpReceive.getSendContactInforList().get(0).getName() + " " +
                         GetContextUtil.getInstance().getString(R.string.click_cancel));
 
 
@@ -152,9 +142,13 @@ public class SendProgressActivity extends AppCompatActivity implements ParentFra
         withdrawtv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainActivity.tcpClient.getHandler().sendEmptyMessage(4);
-                withdrawtv.setVisibility(View.GONE);
-                isLife=false;
+                if (MainActivity.tcpClient != null) {
+                    MainActivity.tcpClient.getHandler().sendEmptyMessage(4);
+                    withdrawtv.setVisibility(View.GONE);
+                    isLife = false;
+
+                }
+
             }
         });
 
@@ -198,7 +192,9 @@ public class SendProgressActivity extends AppCompatActivity implements ParentFra
             }
         };
         TcpServer.setUpdateInterface(updateface);   //设置server进度条的更新接口
+        //tcpServer是否连接
         if (!TcpServer.CONNECTED) {
+            //tcp 客户端还不存在
             if (!MainActivity.tcpClient.IS_ALREADYEXIST) {
 
                 new Thread(new Runnable() {
@@ -213,7 +209,9 @@ public class SendProgressActivity extends AppCompatActivity implements ParentFra
                 }).start();
                 TcpClient.setUpdateInterFace(updateface);
 
-            } else {
+            }
+            //tcpClient已经存在
+            else {
                 if (MainActivity.tcpClient != null && MainActivity.tcpClient.IS_ALREADYEXIST) {
                     if (mstartReceive != null) {
                         mstartReceive.addFile(oldFileLength - 1);
@@ -336,7 +334,7 @@ public class SendProgressActivity extends AppCompatActivity implements ParentFra
                             viewHolder.progressBar.setProgress(percent);
                             NetSpeedResult = InternetTool.getDownloadSpeed(TcpClient.fileSendLength, TcpClient.FileSendTime, TcpClient.fileLength);
                             if (speedTv != null) {
-                                if (percent <100) {
+                                if (percent < 100) {
                                     handler.sendEmptyMessage(2);
                                 }
                                 try {
@@ -358,7 +356,7 @@ public class SendProgressActivity extends AppCompatActivity implements ParentFra
                             viewHolder.progressBar.setProgress(percent);
                             NetSpeedResult = InternetTool.getDownloadSpeed(TcpServer.fileReceiveLength, FileUtil.FileReceiveTime, TcpServer.fileLength);
                             if (speedTv != null) {
-                                if (percent <100) {
+                                if (percent < 100) {
                                     handler.sendEmptyMessage(2);
                                 }
                                 try {
@@ -415,6 +413,7 @@ public class SendProgressActivity extends AppCompatActivity implements ParentFra
     public interface startReceiveIn   //开始接受文件的回调接口   添加文件的的回调接口
     {
         void receive(int filePosition);
+
         void addFile(int startPosition);    //添加文件,startposition 文件开始位置，  filecounts 有多少个新添加文件    在tcpclient中实现
     }
 

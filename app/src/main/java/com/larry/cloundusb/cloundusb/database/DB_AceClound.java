@@ -99,7 +99,7 @@ public class DB_AceClound extends SQLiteOpenHelper {
                     cursor.getString(3),
                     cursor.getString(4),
                     cursor.getString(5),
-                    CommonUtil.FormatTime(Long.parseLong(cursor.getString(6))),
+                    CommonUtil.FormatTimeToday(Long.parseLong(cursor.getString(6))),
                     cursor.getInt(7),
                     cursor.getInt(8));
                     tflist.add(tfinfo);

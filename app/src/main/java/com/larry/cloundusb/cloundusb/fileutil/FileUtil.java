@@ -6,12 +6,10 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
-import android.os.FileUtils;
 import android.os.storage.StorageManager;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
-
 
 import com.larry.cloundusb.R;
 import com.larry.cloundusb.cloundusb.Interneutil.TcpServer;
@@ -36,8 +34,6 @@ import java.lang.reflect.Method;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
-
-import libcore.io.MemoryMappedFile;
 
 /**
  * 文件工具类
@@ -169,8 +165,8 @@ public class FileUtil {
                         } else {
                             sendFileInform.setType(GetContextUtil.getInstance().getString(R.string.diretory));
                         }
-                        ContextCompat contextCompat = new ContextCompat();
-                        sendFileInform.setPortrait(GraphicsUtil.drawableToBitmap(initDrawable(contextCompat, tempFile.isDirectory())));
+
+                        sendFileInform.setPortrait(GraphicsUtil.drawableToBitmap(initDrawable(tempFile.isDirectory())));
                         sendFileInformList.add(sendFileInform);
                     }
 
@@ -208,12 +204,12 @@ public class FileUtil {
 
     }
 
-    static public Drawable initDrawable(ContextCompat contextCompat, boolean type) {
+    static public Drawable initDrawable(boolean type) {
         //如果type 为true 则表示为目录  为 false 则表示为文件
         if (type != true)
-            return contextCompat.getDrawable(GetContextUtil.getInstance(), R.mipmap.history_files_file);
+            return ContextCompat.getDrawable(GetContextUtil.getInstance(), R.mipmap.history_files_file);
         else
-            return contextCompat.getDrawable(GetContextUtil.getInstance(), R.mipmap.common_folder_default_icon);
+            return ContextCompat.getDrawable(GetContextUtil.getInstance(), R.mipmap.common_folder_default_icon);
 
     }
 

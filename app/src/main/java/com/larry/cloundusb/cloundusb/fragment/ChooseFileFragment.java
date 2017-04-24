@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -57,7 +56,6 @@ public class ChooseFileFragment extends BackHandledFragment {
     FragmentTransaction mfragmentTransaction;
     LinearLayout mlinearLayout;
     public static showLinearLayout mshowLinearLayout;
-
 
 
     Handler handler = new Handler() {
@@ -125,18 +123,20 @@ public class ChooseFileFragment extends BackHandledFragment {
         CheckNetWorkStateServices.setUpdateUi(new CheckNetWorkStateServices.updateUi() {
             @Override
             public void updateUi(int[] amount) {
-                documentAmountTextview.setText(String.valueOf(amount[0]) + getResources().getString(R.string.file_unit));
-                ebookAmountTextView.setText(String.valueOf(amount[1]) + getResources().getString(R.string.file_unit));
-                zipAmountTextview.setText(String.valueOf(amount[2]) + getResources().getString(R.string.file_unit));
-                Log.e(FileSizeUtil.getTotalMemorySize(GetContextUtil.getInstance()) + "", "  ");
-                double phoneResult[] = FileSizeUtil.getPhoneSDaCardStafs();
-                double sdcardResult[] = FileSizeUtil.getExternalSDCardStafs(GetContextUtil.getInstance(), true);
-                if (FileUtil.checkSDCard()) {
-                    sdCardAmountTextView.setText(FileSizeUtil.convertFileSize((long) sdcardResult[1]) + "/" + FileSizeUtil.convertFileSize((long) sdcardResult[0]));
+                if (amount != null) {
+                    documentAmountTextview.setText(String.valueOf(amount[0]) + getResources().getString(R.string.file_unit));
+                    ebookAmountTextView.setText(String.valueOf(amount[1]) + getResources().getString(R.string.file_unit));
+                    zipAmountTextview.setText(String.valueOf(amount[2]) + getResources().getString(R.string.file_unit));
+                    Log.e(FileSizeUtil.getTotalMemorySize(GetContextUtil.getInstance()) + "", "  ");
+                    double phoneResult[] = FileSizeUtil.getPhoneSDaCardStafs();
+                    double sdcardResult[] = FileSizeUtil.getExternalSDCardStafs(GetContextUtil.getInstance(), true);
+                    if (FileUtil.checkSDCard()) {
+                        sdCardAmountTextView.setText(FileSizeUtil.convertFileSize((long) sdcardResult[1]) + "/" + FileSizeUtil.convertFileSize((long) sdcardResult[0]));
+                    }
+                    phoneAmountTextView.setText(FileSizeUtil.convertFileSize((long) phoneResult[1]) + "/" + FileSizeUtil.convertFileSize((long) phoneResult[0]));
+                    phoneProgressBar.setProgress((int) (100 * (phoneResult[0] - phoneResult[1]) / phoneResult[0]));
+                    sdCardProgrssBar.setProgress((int) (100 * (sdcardResult[0] - sdcardResult[1]) / sdcardResult[0]));
                 }
-                phoneAmountTextView.setText(FileSizeUtil.convertFileSize((long) phoneResult[1]) + "/" + FileSizeUtil.convertFileSize((long) phoneResult[0]));
-                phoneProgressBar.setProgress((int) (100 * (phoneResult[0] - phoneResult[1]) / phoneResult[0]));
-                sdCardProgrssBar.setProgress((int) (100 * (sdcardResult[0] - sdcardResult[1]) / sdcardResult[0]));
 
 
             }
@@ -180,10 +180,8 @@ public class ChooseFileFragment extends BackHandledFragment {
     }
 
 
-
-    static public void setShowLinearLayout(showLinearLayout showLinearLayout)
-    {
-        mshowLinearLayout=showLinearLayout;
+    static public void setShowLinearLayout(showLinearLayout showLinearLayout) {
+        mshowLinearLayout = showLinearLayout;
     }
 
 
@@ -228,7 +226,7 @@ public class ChooseFileFragment extends BackHandledFragment {
             mfragmentTransaction.replace(R.id.choose_file_fragment_container, mfragment);
             mfragmentTransaction.addToBackStack(null);
             mfragmentTransaction.commit();
-          //  mlinearLayout.setVisibility(View.GONE);
+            //  mlinearLayout.setVisibility(View.GONE);
 
         }
     }

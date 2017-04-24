@@ -58,6 +58,20 @@ public   class CommonUtil extends Application{
     }
 
 
+
+   /*
+   *
+   * 获取当日时间  结果例如2016 -7-23
+   *
+   *
+   *
+   * */
+   static  public String getTimeToDay()
+    {
+       return FormatTimeToday(GetTime());
+    }
+
+
     /*
     *    获取时间间隔
     *
@@ -97,15 +111,31 @@ public   class CommonUtil extends Application{
     }
 
     /*
-    把时间戳转为时间格式
+    把时间戳转为时间格式转换结果2016-9-12 5:22:33
      */
-    public static String FormatTime(long time)
+    public static String FormatTimeToSeconds(long time)
     {
         Date d = new Date(time);
         SimpleDateFormat format = new SimpleDateFormat( "yyyy年MM月dd日 HH:mm:ss" );   //注意两边的空格
 
         return format.format(d);
     }
+
+
+    /*
+   把时间戳转为时间格式转换结果2016-9-1
+    */
+    public static String FormatTimeToday(long time)
+    {
+        Date d = new Date(time);
+        SimpleDateFormat format = new SimpleDateFormat( "yyyy年MM月dd日" );   //注意两边的空格
+
+        return format.format(d);
+    }
+
+
+
+
     /*
     * 分享应用功能
     * parm 需要分享的内容
@@ -206,6 +236,10 @@ public   class CommonUtil extends Application{
         double screenInches = Math.sqrt(x + y);
         return (int)screenInches;
     }
+
+
+
+
 
 
 }

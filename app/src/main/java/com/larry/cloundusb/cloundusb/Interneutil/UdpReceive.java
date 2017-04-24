@@ -12,13 +12,8 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.MulticastSocket;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Larry on 4/19/2016.
@@ -28,7 +23,6 @@ import java.util.Map;
 public class UdpReceive implements Runnable {
 
 
-    //static HashMap<String, SendContactInfo> addressHashMap = new HashMap<>(); //保存接受扫描到的联系人信息
     static List<SendContactInfo> sendContactInfosList;                          //发送人信息列表
     final String MUITLCASTADDRESS = "255.255.255.255";                          //广播目的地址
     final int MUITLCASTPORT = 10009;
@@ -39,7 +33,7 @@ public class UdpReceive implements Runnable {
     DatagramPacket datagramPacket;
     DatagramSocket datagramSocket;
     SendContactInfo msendContactInfor;
-    final static String TAG="udpreceive";
+    final static String TAG = "udpreceive";
 
 
     public static int nowselectuserindex;                                        //获取当前选中的用户的下表
@@ -48,71 +42,66 @@ public class UdpReceive implements Runnable {
     public void run() {
 
         try {
-            if(sendContactInfosList!=null)
-            {
-                sendContactInfosList=null;
+            if (sendContactInfosList != null) {
+                sendContactInfosList = null;
             }
             sendContactInfosList = new ArrayList<SendContactInfo>();
             inetaddress = InetAddress.getByName(MUITLCASTADDRESS);
             datagramSocket = new DatagramSocket(MUITLCASTPORT);
             datagramPacket = new DatagramPacket(new byte[PACKETlENGTH], PACKETlENGTH);
 
-           WifiAdmin wifiAdmin=new WifiAdmin(GetContextUtil.getInstance());
+            WifiAdmin wifiAdmin = new WifiAdmin(GetContextUtil.getInstance());
             while (LIFE) {
-                boolean type=true;                                                //为post则为真   为get则为假
+                boolean type = true;                         //为post则为真   为get则为假
                 datagramSocket.receive(datagramPacket);
-                String ipaddress =null;
+                String ipaddress = null;
                 String selfAddress;
                 if (datagramPacket != null) {
-                    String a = new String(datagramPacket.getData(), datagramPacket.getOffset(), datagramPacket.getLength(),"UTF-8");      //是否是同一个手机如果是不添加
-                    if(a.substring(0,3).equals("get"))
-                    {
-                      type=false;
+                    String a = new String(datagramPacket.getData(), datagramPacket.getOffset(), datagramPacket.getLength(), "UTF-8");      //是否是同一个手机如果是不添加
+                    if (a.substring(0, 3).equals("get")) {
+                        type = false;
                     }
-                    ipaddress = StringUtil.getLastpartIpAddress(SendContactInfo.transformSendContactInfor(a,type).getIpAddress());
-                    if (ScanWifi.isConnected||WifiUtil.isWifiApEnabled(GetContextUtil.getInstance())|| wifiAdmin.getConnectWifiSsid().substring(1,3).equals("Ta"))
-                    {
-                        selfAddress="1";
-                    }else
-                    {
-                        selfAddress = StringUtil.getLastpartIpAddress(String.valueOf(wifiAdmin.getIPAddress()));
+                     ipaddress = StringUtil.getLastpartIpAddress(SendContactInfo.transformSendContactInfor(a, type).getIpAddress());
+                    if (ScanWifi.isConnected || WifiUtil.isWifiApEnabled(GetContextUtil.getInstance()) || wifiAdmin.getConnectWifiSsid().substring(1, 3).equals("Ta")) {
+                        selfAddress = "1";
+                    } else {
+                        selfAddress = StringUtil.getLastpartIpAddress(StringUtil.intIpAddressToString(wifiAdmin.getIPAddress()));
                     }
 
-                    if(ipaddress!=null)
-                    {
-                    if (!ipaddress.equals(selfAddress)) {
-                        if (sendContactInfosList != null) {
-                            SendContactInfo sendContactInfo = new SendContactInfo();
-                            sendContactInfo = SendContactInfo.transformSendContactInfor(a,type);
-                            sendContactInfo.setResourceId(R.drawable.temp_portrait);
-                            if (sendContactInfosList.size() == 0) {
-                                sendContactInfosList.add(sendContactInfo);
-                                Log.e(TAG,"添加信息");
-                            } else {
-                                boolean isExit = false;
-                                for (int position = 0; position < sendContactInfosList.size(); position++) {
-                                    msendContactInfor = sendContactInfosList.get(position);
-                                    if (msendContactInfor.getIpAddress().equals(sendContactInfo.getIpAddress())) {
-                                        isExit = true;
+                    if (ipaddress != null) {
+                        if (!ipaddress.equals(selfAddress)) {
+                            if (sendContactInfosList != null) {
+                                SendContactInfo sendContactInfo = new SendContactInfo();
+                                sendContactInfo = SendContactInfo.transformSendContactInfor(a, type);
+                                sendContactInfo.setResourceId(R.drawable.temp_portrait);
+                                if (sendContactInfosList.size() == 0) {
+                                    sendContactInfosList.add(sendContactInfo);
+                                    Log.e(TAG, "添加信息");
+                                } else {
+                                    boolean isExit = false;
+                                    for (int position = 0; position < sendContactInfosList.size(); position++) {
+                                        msendContactInfor = sendContactInfosList.get(position);
+                                        if (msendContactInfor.getIpAddress().equals(sendContactInfo.getIpAddress())) {
+                                            isExit = true;
+                                        }
+                                    }
+                                    if (isExit == false) {
+                                        sendContactInfosList.add(sendContactInfo);
                                     }
                                 }
-                                if (isExit == false) {
-                                    sendContactInfosList.add(sendContactInfo);
-                                }
+                                String postMessage = "get_ip0macA" + InternetTool.getLocalIpaddress(GetContextUtil.getInstance()) + "_" + InternetTool.getLocalIpaddress(GetContextUtil.getInstance()) + "_" + CommonUtil.getPhoneName();
+                                datagramPacket.setData(postMessage.getBytes());
+                                datagramSocket.send(datagramPacket);
                             }
-                            String postMessage = "get_ip0macA" + InternetTool.getLocalIpaddress(GetContextUtil.getInstance()) + "_" + InternetTool.getLocalIpaddress(GetContextUtil.getInstance()) + "_" + CommonUtil.getPhoneName();
-                            datagramPacket.setData(postMessage.getBytes());
-                            datagramSocket.send(datagramPacket);
+
+
                         }
-
-
-                    }
                     }
                 }
             }
             datagramSocket.close();
         } catch (IOException e) {
-            Log.e("udp receiver", e.getMessage()+"   "+e.getCause());
+            Log.e("udp receiver", e.getMessage() + "   " + e.getCause());
         }
 
 
@@ -129,7 +118,7 @@ public class UdpReceive implements Runnable {
             return sendContactInfosList;
 
         }
-        return  sendContactInfosList;
+        return sendContactInfosList;
 
     }
 
