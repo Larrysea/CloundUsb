@@ -55,7 +55,7 @@ public class VideoGroupAdapter extends RecyclerView.Adapter<VideoGroupAdapter.vi
         holder.checkImageButton.setSelected(false);
         DateFormat formatparm = new SimpleDateFormat("mm:ss");
         holder.timeTextView.setText(CommonUtil.getTotalTime(list.get(position).getTotaltime()));
-        holder.sizeTextView.setText(FileSizeUtil.convertFileSize((long)Integer.valueOf(videoInform.getFileSize())));
+        holder.sizeTextView.setText(FileSizeUtil.convertFileSize((long) Integer.valueOf(videoInform.getFileSize())));
         holder.nametextview.setText(list.get(position).getFileName());
         holder.videoThumb.setImageBitmap(list.get(position).getThumb());
         if (mclickListener != null) {
@@ -63,24 +63,22 @@ public class VideoGroupAdapter extends RecyclerView.Adapter<VideoGroupAdapter.vi
             holder.checkImageButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    Log.e("点解了video fragment","点击点解");
+                    Log.e("点解了video fragment", "点击点解");
                     int position = holder.getPosition();
-                    int deletePosition= FileBox.getInstance().getSendListSize();
-                    if(b)
-                    {
+                    int deletePosition = FileBox.getInstance().getSendListSize();
+                    if (b) {
                         holder.checkImageButton.setChecked(true);
                         holder.checkImageButton.setVisibility(View.VISIBLE);
-                        SendFileInform sendFileInform=new SendFileInform();
-                        sendFileInform.setName(list.get(holder.getAdapterPosition()).getFileName()+"."+list.get(holder.getAdapterPosition()).getType());
+                        SendFileInform sendFileInform = new SendFileInform();
+                        sendFileInform.setName(list.get(holder.getAdapterPosition()).getFileName() + "." + list.get(holder.getAdapterPosition()).getType());
                         sendFileInform.setPath(list.get(holder.getAdapterPosition()).getAbsPath());
                         sendFileInform.setPortrait(list.get(holder.getAdapterPosition()).getThumb());
-                        String path=list.get(holder.getAdapterPosition()).getAbsPath();
+                        String path = list.get(holder.getAdapterPosition()).getAbsPath();
                         sendFileInform.setTime(100);
                         sendFileInform.setFilesize(Long.valueOf(list.get(position).getFileSize()));
                         sendFileInform.setPosition(deletePosition);
                         FileBox.getInstance().storageSendFileItem(sendFileInform);
-                    }
-                    else{
+                    } else {
 
                         holder.checkImageButton.setChecked(false);
                         FileBox.getInstance().cancelSendFile(list.get(position).getFileName());
@@ -101,19 +99,17 @@ public class VideoGroupAdapter extends RecyclerView.Adapter<VideoGroupAdapter.vi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mclickListener!=null)
-                mclickListener.onItemClick(holder.itemView, position);
+                if (mclickListener != null)
+                    mclickListener.onItemClick(holder.itemView, position);
             }
         });
-
-
 
 
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return list == null ? 0 : list.size();
 
     }
 

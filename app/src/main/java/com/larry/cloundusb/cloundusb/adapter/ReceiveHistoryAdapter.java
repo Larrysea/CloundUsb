@@ -57,7 +57,7 @@ public class ReceiveHistoryAdapter extends RecyclerView.Adapter<ReceiveHistoryAd
 
     @Override
     public int getItemCount() {
-        return fileHistoryInfos.size();
+        return fileHistoryInfos==null?0:fileHistoryInfos.size();
     }
 
 

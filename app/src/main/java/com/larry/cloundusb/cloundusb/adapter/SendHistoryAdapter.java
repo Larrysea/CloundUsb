@@ -65,7 +65,7 @@ public class SendHistoryAdapter extends RecyclerView.Adapter<SendHistoryAdapter.
 
     @Override
     public int getItemCount() {
-        return sendHistoryList.size();
+        return sendHistoryList==null?0:sendHistoryList.size();
     }
 
     class viewHolder extends RecyclerView.ViewHolder {

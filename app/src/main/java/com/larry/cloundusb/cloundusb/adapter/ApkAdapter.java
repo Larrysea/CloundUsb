@@ -110,7 +110,7 @@ public class ApkAdapter  extends RecyclerView.Adapter<ApkAdapter.viewHolder>  {
 
     @Override
     public int getItemCount() {
-        return apkList.size();
+        return apkList==null?0:apkList.size();
     }
 
     //子項目的viewholder

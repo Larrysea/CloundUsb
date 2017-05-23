@@ -159,7 +159,7 @@ public class PictureGroupAdapter extends RecyclerView.Adapter<PictureGroupAdapte
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return list == null ? 0 : list.size();
 
     }
 

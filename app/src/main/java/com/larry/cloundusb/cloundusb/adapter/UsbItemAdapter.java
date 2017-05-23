@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -12,12 +11,7 @@ import com.larry.cloundusb.R;
 import com.larry.cloundusb.cloundusb.application.GetContextUtil;
 import com.larry.cloundusb.cloundusb.baseclass.SendFileInform;
 import com.larry.cloundusb.cloundusb.fileutil.FileBox;
-import com.larry.cloundusb.cloundusb.fileutil.FileUtil;
 
-import org.w3c.dom.Text;
-
-import java.io.File;
-import java.security.GeneralSecurityException;
 import java.util.List;
 
 /**
@@ -84,7 +78,7 @@ public class UsbItemAdapter extends RecyclerView.Adapter<UsbItemAdapter.viewHold
 
     @Override
     public int getItemCount() {
-        return msendFileInfromList.size();
+        return msendFileInfromList==null?0:msendFileInfromList.size();
     }
 
     public void setRecyclerListener(recyclerListener listener) {

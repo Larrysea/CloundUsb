@@ -15,7 +15,7 @@ android {
     defaultConfig {
         applicationId "com.larry.cloundusb"
         minSdkVersion 17
-        targetSdkVersion 25
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -60,10 +60,12 @@ def getLayoutLibPath() {
     return "${android.getSdkDirectory().getAbsolutePath()}" + "/platforms/" + android.compileSdkVersion + "/data/layoutlib.jar"
 }
 
-
-
-
-
+//为了解决commio-copyutils 中重复引入的问题
+configurations.all {
+    resolutionStrategy.dependencySubstitution {
+        substitute module('org.apache.commons:commons-io:1.3.2') with module('commons-io:commons-io:1.3.2')
+    }
+}
 
 
 

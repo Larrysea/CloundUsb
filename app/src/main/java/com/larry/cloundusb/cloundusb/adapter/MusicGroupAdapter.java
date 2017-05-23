@@ -117,7 +117,7 @@ public class MusicGroupAdapter extends  RecyclerView.Adapter<MusicGroupAdapter.m
     }
     @Override
     public int getItemCount() {
-        return list.size();
+        return list == null ? 0 : list.size();
 
     }
 

@@ -16,11 +16,9 @@ import com.larry.cloundusb.R;
 import com.larry.cloundusb.cloundusb.appinterface.recyclerviewClickListener;
 import com.larry.cloundusb.cloundusb.application.GetContextUtil;
 import com.larry.cloundusb.cloundusb.baseclass.SendFileInform;
-import com.larry.cloundusb.cloundusb.fileutil.FileBox;
 import com.larry.cloundusb.cloundusb.fileutil.FileUtil;
 import com.larry.cloundusb.cloundusb.util.GraphicsUtil;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -61,8 +59,8 @@ public class SendProgressAdapter extends RecyclerView.Adapter<SendProgressAdapte
         if (sendfilelist.get(position).getPortrait() != null) {
             holder.portraitView.setImageDrawable(new BitmapDrawable(sendfilelist.get(position).getPortrait()));
         } else {
-           ;
-            holder.portraitView.setImageBitmap(initFilePortrait( FileUtil.getFileType(sendfilelist.get(position).getName())));
+            ;
+            holder.portraitView.setImageBitmap(initFilePortrait(FileUtil.getFileType(sendfilelist.get(position).getName())));
 
         }
 
@@ -80,7 +78,7 @@ public class SendProgressAdapter extends RecyclerView.Adapter<SendProgressAdapte
 
     @Override
     public int getItemCount() {
-        return sendfilelist.size();
+        return sendfilelist == null ? 0 : sendfilelist.size();
     }
 
     public class viewHolder extends RecyclerView.ViewHolder {
@@ -123,7 +121,7 @@ public class SendProgressAdapter extends RecyclerView.Adapter<SendProgressAdapte
     *
     * */
     public Bitmap initFilePortrait(String type) {
-        Bitmap bitmap=null;
+        Bitmap bitmap = null;
         if (type.equals("doc") || type.equals("docx") || type.equals("ppt") || type.equals("xls") || type.equals("pdf")) {
 
             bitmap = GraphicsUtil.drawableToBitmap(GetContextUtil.getInstance().getResources().getDrawable(R.mipmap.ic_document_type));
@@ -141,12 +139,10 @@ public class SendProgressAdapter extends RecyclerView.Adapter<SendProgressAdapte
 
         } else if (type.equals("mp3") || type.equals("ape") || type.equals("wma") || type.equals("mkv")) {
             bitmap = GraphicsUtil.drawableToBitmap(GetContextUtil.getInstance().getResources().getDrawable(R.mipmap.ic_music_type));
-        }
-        else
-        {
+        } else {
             bitmap = GraphicsUtil.drawableToBitmap(GetContextUtil.getInstance().getResources().getDrawable(R.mipmap.ic_file_type));
         }
-        return  bitmap;
+        return bitmap;
 
 
     }

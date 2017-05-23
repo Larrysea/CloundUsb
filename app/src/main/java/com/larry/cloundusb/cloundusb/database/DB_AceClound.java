@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.larry.cloundusb.cloundusb.adapter.SendHistoryAdapter;
 import com.larry.cloundusb.cloundusb.baseclass.FileHistoryInfo;
 import com.larry.cloundusb.cloundusb.util.CommonUtil;
 
@@ -139,9 +138,5 @@ public class DB_AceClound extends SQLiteOpenHelper {
         String Delsql = "delete from " + TABLE_NAME;
         db.execSQL(Delsql);
     }
-
-
-
-
 
 }

@@ -50,7 +50,8 @@ public class FragmentPagerAdapter extends android.support.v4.app.FragmentStatePa
 
     @Override
     public int getCount() {
-        return fragmentList.size();
+        return fragmentList == null ? 0 : fragmentList.size();
+
     }
 
     @Override

@@ -18,26 +18,26 @@ import java.util.List;
 
 /**
  * Created by Larry on 5/23/2016.
- *
- *
- *  显示详细文件的路径的适配器
-*/
-public class FileChoosePathAdapter extends RecyclerView.Adapter<FileChoosePathAdapter.viewHodler>{
+ * <p>
+ * <p>
+ * 显示详细文件的路径的适配器
+ */
+public class FileChoosePathAdapter extends RecyclerView.Adapter<FileChoosePathAdapter.viewHodler> {
 
     List<SendFileInform> mfileInformList;
     Context mcontext;
     FileChoosePathAdapter.clickListener mclickListener;//监听器
 
-    public FileChoosePathAdapter(Context context, List<SendFileInform> fileInformsList)
-    {
-        mcontext=context;
-        mfileInformList=fileInformsList;
+    public FileChoosePathAdapter(Context context, List<SendFileInform> fileInformsList) {
+        mcontext = context;
+        mfileInformList = fileInformsList;
 
 
     }
+
     @Override
     public viewHodler onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new viewHodler(LayoutInflater.from(mcontext).inflate(R.layout.chooser_file_fragment_item,null,false));
+        return new viewHodler(LayoutInflater.from(mcontext).inflate(R.layout.chooser_file_fragment_item, null, false));
     }
 
     @Override
@@ -45,18 +45,16 @@ public class FileChoosePathAdapter extends RecyclerView.Adapter<FileChoosePathAd
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mclickListener!=null)
-                {
-                    mclickListener.itemOnClick(v,position,mfileInformList.get(position).getPath());
+                if (mclickListener != null) {
+                    mclickListener.itemOnClick(v, position, mfileInformList.get(position).getPath());
                 }
             }
         });
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                if(mclickListener!=null)
-                {
-                    mclickListener.itemLongClick(view,position,mfileInformList.get(position).getPath());
+                if (mclickListener != null) {
+                    mclickListener.itemLongClick(view, position, mfileInformList.get(position).getPath());
                 }
 
                 return false;
@@ -64,10 +62,9 @@ public class FileChoosePathAdapter extends RecyclerView.Adapter<FileChoosePathAd
         });
         holder.typeImageView.setImageDrawable(new BitmapDrawable(mfileInformList.get(position).getPortrait()));
         holder.nameTextVeiw.setText(mfileInformList.get(position).getName());
-        long filesize=mfileInformList.get(position).getFilesize();
-        if(mfileInformList.get(position).isFile())
-        {
-           // holder.sizeTextView.setText(FileSizeUtil.convertFileSize(filesize));
+        long filesize = mfileInformList.get(position).getFilesize();
+        if (mfileInformList.get(position).isFile()) {
+            // holder.sizeTextView.setText(FileSizeUtil.convertFileSize(filesize));
         }
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -77,14 +74,14 @@ public class FileChoosePathAdapter extends RecyclerView.Adapter<FileChoosePathAd
         });
 
 
-
     }
+
     @Override
     public int getItemCount() {
-        return mfileInformList.size();
+        return mfileInformList == null ? 0 : mfileInformList.size();
     }
 
-     class viewHodler extends RecyclerView.ViewHolder{
+    class viewHodler extends RecyclerView.ViewHolder {
         TextView nameTextVeiw;  //显示文件名
         TextView sizeTextView;  //显示文件大小
         CheckBox checkBox;      //文件chekckbox
@@ -92,10 +89,10 @@ public class FileChoosePathAdapter extends RecyclerView.Adapter<FileChoosePathAd
 
         public viewHodler(View itemView) {
             super(itemView);
-            nameTextVeiw=(TextView) itemView.findViewById(R.id.choose_file_fragment_item_name_textview);
-            sizeTextView=(TextView)itemView.findViewById(R.id.choose_file_fragment_item_size_textview);
-            checkBox=(CheckBox)itemView.findViewById(R.id.choose_file_fragment_item_checkbox);
-            typeImageView=(ImageView) itemView.findViewById(R.id.choose_file_fragment_item_imageview);
+            nameTextVeiw = (TextView) itemView.findViewById(R.id.choose_file_fragment_item_name_textview);
+            sizeTextView = (TextView) itemView.findViewById(R.id.choose_file_fragment_item_size_textview);
+            checkBox = (CheckBox) itemView.findViewById(R.id.choose_file_fragment_item_checkbox);
+            typeImageView = (ImageView) itemView.findViewById(R.id.choose_file_fragment_item_imageview);
 
         }
     }
@@ -111,29 +108,26 @@ public class FileChoosePathAdapter extends RecyclerView.Adapter<FileChoosePathAd
     * 初始化接口
     *
     * */
-    public void setOnClickListener(clickListener clickListener)
-    {
-      mclickListener=clickListener;
+    public void setOnClickListener(clickListener clickListener) {
+        mclickListener = clickListener;
     }
-    public interface  clickListener
-    {
-        void itemOnClick(View view,int position,String path);
-        void itemLongClick(View view,int position,String path);
+
+    public interface clickListener {
+        void itemOnClick(View view, int position, String path);
+
+        void itemLongClick(View view, int position, String path);
     }
 
 
-    public void addData(int position,SendFileInform sendFileInform)
-    {
-        mfileInformList.add(position,sendFileInform);
+    public void addData(int position, SendFileInform sendFileInform) {
+        mfileInformList.add(position, sendFileInform);
         notifyItemInserted(position);
     }
 
-    public void removeData(int position)
-    {
+    public void removeData(int position) {
         mfileInformList.remove(position);
         notifyItemRemoved(position);
     }
-
 
 
 }

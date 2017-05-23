@@ -110,7 +110,8 @@ public class MusicChildAdapter extends RecyclerView.Adapter<MusicChildAdapter.vi
 
     @Override
     public int getItemCount() {
-        return musiceList.size();
+        return musiceList == null ? 0 : musiceList.size();
+
     }
 
 

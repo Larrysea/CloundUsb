@@ -1,7 +1,6 @@
 package com.larry.cloundusb.cloundusb.adapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +58,7 @@ public class SelectContactItemAdapter  extends RecyclerView.Adapter<SelectContac
 
     @Override
     public int getItemCount() {
-        return mcontactInforList.size();
+        return mcontactInforList==null?0:mcontactInforList.size();
     }
 
     class SelectContactViewHolder extends RecyclerView.ViewHolder

@@ -4,23 +4,16 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.larry.cloundusb.cloundusb.application.GetContextUtil;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,41 +27,40 @@ import java.util.Map;
 /**
  * Created by Larry on 3/24/2016.
  * 基础工具类
- *
- *
  */
 
-public   class CommonUtil extends Application{
+public class CommonUtil extends Application {
+
+
+    final static String TAG = CommonUtil.class.toString();
 
     /**
-     *
      * 播放time 单位为ms
      * 返回时间格式 13:24
-     *
-     *
-     *
-     * */
+     */
 
-    public static   String  getTotalTime(String time)
-    {
-        long longTime=(long)Integer.parseInt(time);
-        SimpleDateFormat dateFormat=new SimpleDateFormat("mm:ss", Locale.getDefault());
-        Date date=new Date(longTime);
-        return  dateFormat.format(date);
+    public static String getTotalTime(String time) {
+        long longTime = 0;
+        try {
+            longTime = (long) Integer.parseInt(time);
+        } catch (NumberFormatException e) {
+            Log.e(TAG, e.getMessage());
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("mm:ss", Locale.getDefault());
+        Date date = new Date(longTime);
+        return dateFormat.format(date);
     }
 
 
-
-   /*
-   *
-   * 获取当日时间  结果例如2016 -7-23
-   *
-   *
-   *
-   * */
-   static  public String getTimeToDay()
-    {
-       return FormatTimeToday(GetTime());
+    /*
+    *
+    * 获取当日时间  结果例如2016 -7-23
+    *
+    *
+    *
+    * */
+    static public String getTimeToDay() {
+        return FormatTimeToday(GetTime());
     }
 
 
@@ -78,12 +70,11 @@ public   class CommonUtil extends Application{
     *
     * */
 
-    static public String getTimeGap(int startTime,int endTime)
-    {
+    static public String getTimeGap(int startTime, int endTime) {
         String result;
-        result=String.valueOf(endTime-startTime);
-        Log.e("显示时间是多少i",result);
-        return String.valueOf(endTime-startTime);
+        result = String.valueOf(endTime - startTime);
+        Log.e("显示时间是多少i", result);
+        return String.valueOf(endTime - startTime);
 
     }
 
@@ -92,10 +83,9 @@ public   class CommonUtil extends Application{
     *
     *
     * */
-    static public int getSecond()
-    {
+    static public int getSecond() {
 
-        Calendar calendar=Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
         return calendar.get(Calendar.SECOND);
 
 
@@ -104,19 +94,17 @@ public   class CommonUtil extends Application{
     /*
     获取当前的时间戳
      */
-    public static long GetTime()
-    {
-        long time=new Date().getTime();
+    public static long GetTime() {
+        long time = new Date().getTime();
         return time;
     }
 
     /*
     把时间戳转为时间格式转换结果2016-9-12 5:22:33
      */
-    public static String FormatTimeToSeconds(long time)
-    {
+    public static String FormatTimeToSeconds(long time) {
         Date d = new Date(time);
-        SimpleDateFormat format = new SimpleDateFormat( "yyyy年MM月dd日 HH:mm:ss" );   //注意两边的空格
+        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");   //注意两边的空格
 
         return format.format(d);
     }
@@ -125,15 +113,12 @@ public   class CommonUtil extends Application{
     /*
    把时间戳转为时间格式转换结果2016-9-1
     */
-    public static String FormatTimeToday(long time)
-    {
+    public static String FormatTimeToday(long time) {
         Date d = new Date(time);
-        SimpleDateFormat format = new SimpleDateFormat( "yyyy年MM月dd日" );   //注意两边的空格
+        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");   //注意两边的空格
 
         return format.format(d);
     }
-
-
 
 
     /*
@@ -145,10 +130,9 @@ public   class CommonUtil extends Application{
     *
     *
     * */
-    static public Intent shareInfor(int shareInfor)
-    {
+    static public Intent shareInfor(int shareInfor) {
 
-        Intent intent=new Intent();
+        Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);
         intent.putExtra(Intent.EXTRA_TEXT, GetContextUtil.getInstance().getResources().getString(shareInfor));
 
@@ -159,9 +143,8 @@ public   class CommonUtil extends Application{
 
     }
 
-    static public String getPhoneName()
-    {
-       return new Build().MODEL;
+    static public String getPhoneName() {
+        return new Build().MODEL;
     }
 
 
@@ -169,17 +152,15 @@ public   class CommonUtil extends Application{
     * 获取手机的相关联账户
     *
     * */
-    static  public String  getAccountName()
-    {
+    static public String getAccountName() {
 
-        AccountManager accountManager=AccountManager.get(GetContextUtil.getInstance());
-        Account []accounts=accountManager.getAccounts();
-        for(Account parm:accounts)
-        {
-            System.out.print("显示账户数据"+parm.name);
+        AccountManager accountManager = AccountManager.get(GetContextUtil.getInstance());
+        Account[] accounts = accountManager.getAccounts();
+        for (Account parm : accounts) {
+            System.out.print("显示账户数据" + parm.name);
 
         }
-      return accounts[0].name;
+        return accounts[0].name;
 
     }
 
@@ -189,30 +170,28 @@ public   class CommonUtil extends Application{
     *
     * */
 
-  static   public <T> List<T>  subHashmap(HashMap<String,T> hashMap)
-    {
-        List<T> list=new ArrayList<T>();
+    static public <T> List<T> subHashmap(HashMap<String, T> hashMap) {
+        List<T> list = new ArrayList<T>();
 
-        Iterator<Map.Entry<String,T>> iterator=hashMap.entrySet().iterator();
-        if(hashMap.size()!=0)
-        while(iterator.hasNext())
-        {
-            Map.Entry<String,T> entry=iterator.next();
-            T t=entry.getValue();
-            list.add(t);
-        }
+        Iterator<Map.Entry<String, T>> iterator = hashMap.entrySet().iterator();
+        if (hashMap.size() != 0)
+            while (iterator.hasNext()) {
+                Map.Entry<String, T> entry = iterator.next();
+                T t = entry.getValue();
+                list.add(t);
+            }
 
         return list;
 
     }
 
 
-     /*
-     *
-     * 在非主线程中显示toast
-     *
-     * */
-   static public void showToast(String msg){
+    /*
+    *
+    * 在非主线程中显示toast
+    *
+    * */
+    static public void showToast(String msg) {
         Looper.prepare();
         Toast.makeText(GetContextUtil.getInstance(), msg, Toast.LENGTH_SHORT).show();
         Looper.loop();
@@ -227,19 +206,15 @@ public   class CommonUtil extends Application{
     *
     * */
 
-   static  public int getScreenSizeOfDevice2(Activity activity) {
+    static public int getScreenSizeOfDevice2(Activity activity) {
         Point point = new Point();
         activity.getWindowManager().getDefaultDisplay().getRealSize(point);
         DisplayMetrics dm = activity.getResources().getDisplayMetrics();
-        double x = Math.pow(point.x/ dm.xdpi, 2);
+        double x = Math.pow(point.x / dm.xdpi, 2);
         double y = Math.pow(point.y / dm.ydpi, 2);
         double screenInches = Math.sqrt(x + y);
-        return (int)screenInches;
+        return (int) screenInches;
     }
-
-
-
-
 
 
 }
