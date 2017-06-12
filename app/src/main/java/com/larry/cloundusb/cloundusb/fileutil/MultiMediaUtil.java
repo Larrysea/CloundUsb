@@ -41,6 +41,7 @@ public class MultiMediaUtil {
    *
    * */
 
+    private static List<VideoInform> videoInformList;
     public static HashMap<String, VideoInform> videoHashMap;
     static public List<String> recentPictureList;  //最近的图片
     static List<SendFileInform> zipInformList;  //压缩文件
@@ -179,13 +180,18 @@ public class MultiMediaUtil {
     /**
      * 获取手机视频信息
      *
-     * @param handler handler
-     * @param count   获取视频的数量count
+     * @param handler       handler
+     * @param startPosition 开始扫描的位置
+     * @param count         获取视频的数量count
      */
-    static public void scanVideo(final Handler handler, final int count) {
+    static public void scanVideo(final Handler handler, final int startPosition, final int count) {
 
-        videoHashMap = new HashMap<String, VideoInform>();
-        if (count < -1) {
+        // videoHashMap = new HashMap<String, VideoInform>();
+        if (videoInformList == null) {
+            videoInformList = new ArrayList<VideoInform>();
+        }
+        videoInformList.clear();
+        if (count < -1 || startPosition < 0) {
             throw new IllegalArgumentException("count cant less than zero");
         }
         MainActivity.sexecutorService.submit(new Runnable() {
@@ -199,7 +205,6 @@ public class MultiMediaUtil {
                 String name;
                 String totlaTime;
                 String path;
-                String parentPath;
                 File tempFile;
                 long modifyDate;
                 String size;
@@ -214,40 +219,45 @@ public class MultiMediaUtil {
                             null, null, MediaStore.Video.Media.DEFAULT_SORT_ORDER);
                     uri = MediaStore.Video.Media.INTERNAL_CONTENT_URI;
                     int index = 0;
-                    while (cursor.moveToNext()) {
-                        index++;
-                        path = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA));
-                        parentPath = new File(path).getParentFile().getName();//尝试一下使用getparent()
-                        tempFile = new File(path);
-                        modifyDate = tempFile.lastModified();
-                        size = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.SIZE));
-                        if (Integer.valueOf(size) != 0) {
-                            type = FileUtil.getFileType(path);
-                            name = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.TITLE));
-                            totlaTime = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DURATION));
-                            map = Bitmap.createScaledBitmap(VideoUtil.getThumb(path), 100, 100, true);
-                            VideoInform infor = new VideoInform();
-                            infor.setFileName(name);
-                            infor.setType(type);
-                            infor.setFileSize(size);
-                            infor.setAbsPath(path);
-                            infor.setModifydateDate(modifyDate);
-                            infor.setTotaltime(totlaTime);
-                            infor.setThumb(map);
-                            if (!videoHashMap.containsKey(parentPath)) {
-                                videoHashMap.put(path, infor);
-                            }
+                    if (cursor != null) {
+                        if (!cursor.moveToPosition(startPosition)) {
+                            return;
                         }
+                        while (cursor.moveToNext()) {
+                            index++;
+                            path = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA));
+                            tempFile = new File(path);
+                            modifyDate = tempFile.lastModified();
+                            size = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.SIZE));
+                            if (Integer.valueOf(size) != 0) {
+                                type = FileUtil.getFileType(path);
+                                name = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.TITLE));
+                                totlaTime = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DURATION));
+                                map = Bitmap.createScaledBitmap(VideoUtil.getThumb(path), 100, 100, true);
+                                VideoInform infor = new VideoInform();
+                                infor.setFileName(name);
+                                infor.setType(type);
+                                infor.setFileSize(size);
+                                infor.setAbsPath(path);
+                                infor.setModifydateDate(modifyDate);
+                                infor.setTotaltime(totlaTime);
+                                infor.setThumb(map);
+                           /* if (!videoHashMap.containsKey(parentPath)) {
+                                videoHashMap.put(path, infor);
+                            }*/
+                                videoInformList.add(infor);
+                            }
 
-                        //如果获取到指定数量的视频 文件以后停止处理
-                        if (index == count) {
-                            break;
+                            //如果获取到指定数量的视频 文件以后停止处理
+                            if (index == count) {
+                                break;
+                            }
                         }
                     }
                 }
                 cursor.close();
                 Message message = new Message();
-                message.obj = videoHashMap;
+                message.obj = videoInformList;
                 message.what = SCAN_VIDEO;
                 if (handler != null)
                     handler.sendMessage(message);

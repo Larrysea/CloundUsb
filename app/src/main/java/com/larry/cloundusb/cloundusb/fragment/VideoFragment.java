@@ -48,7 +48,7 @@ public class VideoFragment extends Fragment {
     HashMap<String, VideoInform> videoHashMap;//保存所有视频文件信息的hashmap
     XRecyclerView videoRecyclerView;   //展示视频的recycerView
 
-    List<VideoInform> videoList;
+    List<VideoInform> mVideoList;
     static final int SCAN_VIDEO = 3;//扫描视频文件的标记
     Bundle mbundle;
     FragmentManager fragmentManager;
@@ -60,16 +60,15 @@ public class VideoFragment extends Fragment {
             switch (msg.what) {
                 case SCAN_oK:
                     mprogressDialog.dismiss();
-                    videoList = subgroupVideo(videoHashMap);
-                    if (videoList != null) {
+                    // mVideoList = subgroupVideo(videoHashMap);
+                    if (mVideoList != null) {
                         VideoGroupAdapter madapeter = new VideoGroupAdapter
-                                (mcontext, videoList);
-                        Log.e("显示数据的大小", videoList.size() + " ");
+                                (mcontext, mVideoList);
+                        Log.e("显示数据的大小", mVideoList.size() + " ");
                         madapeter.setOnItemClickListener(new VideoGroupAdapter.clickListener() {
                             @Override
                             public void onItemClick(View v, int position) {
-
-                                VideoInform inform = subgroupVideo(videoHashMap).get(position);
+                                VideoInform inform = mVideoList.get(position);
                                 Uri uri = Uri.parse(inform.getAbsPath());
                                 Intent intent = new Intent(Intent.ACTION_VIEW);
                                 intent.setDataAndType(uri, "video/mp4");
@@ -80,10 +79,10 @@ public class VideoFragment extends Fragment {
                             public void onItemLongClick(View v, int position) {
                                 ContextMenuDialog contextMenuDialog = new ContextMenuDialog();
                                 SendFileInform sendFileInform = new SendFileInform();
-                                sendFileInform.setPath(videoList.get(position).getAbsPath());
-                                sendFileInform.setName(videoList.get(position).getFileName());
-                                sendFileInform.setFilesize(Long.parseLong(videoList.get(position).getFileSize()));
-                                sendFileInform.setType(videoList.get(position).getType());
+                                sendFileInform.setPath(mVideoList.get(position).getAbsPath());
+                                sendFileInform.setName(mVideoList.get(position).getFileName());
+                                sendFileInform.setFilesize(Long.parseLong(mVideoList.get(position).getFileSize()));
+                                sendFileInform.setType(mVideoList.get(position).getType());
                                 mbundle.putParcelable("copyfileinform", sendFileInform);
                                 contextMenuDialog.setArguments(mbundle);
                                 contextMenuDialog.show(fragmentManager, "tag");
@@ -92,7 +91,7 @@ public class VideoFragment extends Fragment {
                         });
                         videoRecyclerView.setAdapter(madapeter);
                     } else {
-                        if (videoList == null) {
+                        if (mVideoList == null) {
                             FragmentTransaction transaction = getFragmentManager().beginTransaction();
                             NoContentFragment noContentFragment = new NoContentFragment();
                             Bundle bundle = new Bundle();
@@ -102,12 +101,11 @@ public class VideoFragment extends Fragment {
                             transaction.commit();
                         }
                     }
-
                     break;
-
                 case SCAN_VIDEO:
-                    videoHashMap = (HashMap<String, VideoInform>) msg.obj;
+                    addVideoListToTail((ArrayList<VideoInform>) msg.obj);
                     handler.sendEmptyMessage(SCAN_oK);
+                    videoRecyclerView.loadMoreComplete();
                     break;
             }
 
@@ -125,6 +123,7 @@ public class VideoFragment extends Fragment {
         videoRecyclerView.setLayoutManager(new LinearLayoutManager(mcontext));
         videoRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         videoRecyclerView.setLoadingMoreEnabled(true);
+        videoRecyclerView.setPullRefreshEnabled(false);
         videoRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
@@ -133,7 +132,7 @@ public class VideoFragment extends Fragment {
 
             @Override
             public void onLoadMore() {
-
+                MultiMediaUtil.scanVideo(handler, mVideoList.size(), 6);
             }
         });
         init();
@@ -144,8 +143,9 @@ public class VideoFragment extends Fragment {
     public void init() {
 
 
-        videoHashMap = new HashMap<String, VideoInform>();
-        videoList = new ArrayList<VideoInform>();
+        //  videoHashMap = new HashMap<String, VideoInform>();
+
+        mVideoList = new ArrayList<VideoInform>();
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             Toast.makeText(mcontext, "暂无外部存储", Toast.LENGTH_SHORT).show();
             return;
@@ -157,7 +157,8 @@ public class VideoFragment extends Fragment {
             handler.sendEmptyMessage(SCAN_oK);
 
         } else {
-            MultiMediaUtil.scanVideo(handler, 8);
+            //每次视频扫描的位置就是现在视频列表的最后一个位置
+            MultiMediaUtil.scanVideo(handler, mVideoList.size(), 8);
         }
         fragmentManager = getFragmentManager();
         mbundle = new Bundle();
@@ -187,6 +188,15 @@ public class VideoFragment extends Fragment {
 
     public interface ItemClickListener {
         void ItemClick(List<String> list);
+    }
+
+    /**
+     * 将后面添加数据添加到视频列表的尾部
+     *
+     * @param videoList
+     */
+    public void addVideoListToTail(ArrayList<VideoInform> videoList) {
+        mVideoList.addAll(mVideoList.size(), videoList);
     }
 
 
