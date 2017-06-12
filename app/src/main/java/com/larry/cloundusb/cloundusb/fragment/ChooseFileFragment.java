@@ -100,9 +100,9 @@ public class ChooseFileFragment extends BackHandledFragment {
         phoneStorage = (LinearLayout) view.findViewById(R.id.choose_file_fragment_phone_linearlayout);
         sdCardStorage = (LinearLayout) view.findViewById(R.id.choose_file_fragment_card_linearlayout);
         mlinearLayout = (LinearLayout) view.findViewById(R.id.choose_file_fragment_linearlayout);
-        // if (FileUtil.hasSDCard()) {
-        sdCardStorage.setVisibility(View.VISIBLE);
-        // }
+        if (FileUtil.checkSDCard()) {
+            sdCardStorage.setVisibility(View.VISIBLE);
+        }
         documentLinearLayout = (LinearLayout) view.findViewById(R.id.choose_file_fragment_docunment_lineatlayout);
         zipLinearLayout = (LinearLayout) view.findViewById(R.id.choose_file_fragment_zip_linealayout);
         ebookLieatLayout = (LinearLayout) view.findViewById(R.id.choose_file_fragment_ebook_linearlayout);
@@ -132,10 +132,10 @@ public class ChooseFileFragment extends BackHandledFragment {
                     double sdcardResult[] = FileSizeUtil.getExternalSDCardStafs(GetContextUtil.getInstance(), true);
                     if (FileUtil.checkSDCard()) {
                         sdCardAmountTextView.setText(FileSizeUtil.convertFileSize((long) sdcardResult[1]) + "/" + FileSizeUtil.convertFileSize((long) sdcardResult[0]));
+                        sdCardProgrssBar.setProgress((int) (100 * (sdcardResult[0] - sdcardResult[1]) / sdcardResult[0]));
                     }
                     phoneAmountTextView.setText(FileSizeUtil.convertFileSize((long) phoneResult[1]) + "/" + FileSizeUtil.convertFileSize((long) phoneResult[0]));
                     phoneProgressBar.setProgress((int) (100 * (phoneResult[0] - phoneResult[1]) / phoneResult[0]));
-                    sdCardProgrssBar.setProgress((int) (100 * (sdcardResult[0] - sdcardResult[1]) / sdcardResult[0]));
                 }
 
 

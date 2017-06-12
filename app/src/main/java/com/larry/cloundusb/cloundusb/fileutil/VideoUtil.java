@@ -3,7 +3,6 @@ package com.larry.cloundusb.cloundusb.fileutil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
-import android.provider.MediaStore;
 
 import com.larry.cloundusb.R;
 import com.larry.cloundusb.cloundusb.application.GetContextUtil;
@@ -18,16 +17,17 @@ import com.larry.cloundusb.cloundusb.util.GraphicsUtil;
 
 public class VideoUtil {
 
-    public static Bitmap getThumb(String path) {
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+    static MediaMetadataRetriever retriever;
+    static Bitmap bitmap;
 
-        retriever.getFrameAtTime();
+    public static Bitmap getThumb(final String path) {
+        retriever = new MediaMetadataRetriever();
         if (checkIsvideo(FileUtil.getFileType(path))) {
             retriever.setDataSource(path);
         }
-
-        if (retriever.getFrameAtTime() != null) {
-            return retriever.getFrameAtTime();
+        bitmap = retriever.getFrameAtTime();
+        if (bitmap != null) {
+            return bitmap;
         } else {
             return GraphicsUtil.drawableToBitmap(GetContextUtil.getInstance().getResources().getDrawable(R.drawable.video_ic));
         }

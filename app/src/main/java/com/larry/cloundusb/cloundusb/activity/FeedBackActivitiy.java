@@ -1,10 +1,8 @@
 package com.larry.cloundusb.cloundusb.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -67,7 +65,6 @@ public class FeedBackActivitiy extends AppCompatActivity {
                     if(MainActivity.user!=null&&MainActivity.user.isLogin())
                     {
                         loginUtil.feedbackRequest(MainActivity.user.getUserId(), feedbackET.getText().toString(), emailAddressET.getText().toString());
-
                     }else{
                         loginUtil.feedbackRequest("notregister user", feedbackET.getText().toString(), emailAddressET.getText().toString());
                         Toast.makeText(FeedBackActivitiy.this, GetContextUtil.getInstance().getString(R.string.thanks_you_feedback), Toast.LENGTH_SHORT).show();

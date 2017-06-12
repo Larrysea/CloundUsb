@@ -1,17 +1,14 @@
 package com.larry.cloundusb.cloundusb.fileutil;
 
-import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
-
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.larry.cloundusb.R;
@@ -23,7 +20,6 @@ import com.larry.cloundusb.cloundusb.baseclass.VideoInform;
 import com.larry.cloundusb.cloundusb.util.GraphicsUtil;
 
 import java.io.File;
-import java.nio.channels.FileLockInterruptionException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -180,20 +176,33 @@ public class MultiMediaUtil {
         return musicHashMap;
     }
 
-    /*
-    * 获取手机视频信息
-    *
-    *
-    * */
-    static public void scanVideo(final Handler handler) {
+    /**
+     * 获取手机视频信息
+     *
+     * @param handler handler
+     * @param count   获取视频的数量count
+     */
+    static public void scanVideo(final Handler handler, final int count) {
 
         videoHashMap = new HashMap<String, VideoInform>();
-        new Thread(new Runnable() {
+        if (count < -1) {
+            throw new IllegalArgumentException("count cant less than zero");
+        }
+        MainActivity.sexecutorService.submit(new Runnable() {
             @Override
             public void run() {
 
                 Uri uri = null;
                 Cursor cursor = null;
+                Bitmap map;
+                String type;
+                String name;
+                String totlaTime;
+                String path;
+                String parentPath;
+                File tempFile;
+                long modifyDate;
+                String size;
                 for (int Stroagetype = 0; Stroagetype < 2; Stroagetype++) {
                     if (Stroagetype == 0) {
                         uri = MediaStore.Video.Media.INTERNAL_CONTENT_URI;
@@ -204,18 +213,19 @@ public class MultiMediaUtil {
                     cursor = contentResolver.query(uri, null,
                             null, null, MediaStore.Video.Media.DEFAULT_SORT_ORDER);
                     uri = MediaStore.Video.Media.INTERNAL_CONTENT_URI;
+                    int index = 0;
                     while (cursor.moveToNext()) {
-
-                        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA));
-                        String parentPath = new File(path).getParentFile().getName();//尝试一下使用getparent()
-                        File tempFile = new File(path);
-                        long modifyDate = tempFile.lastModified();
-                        String size = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.SIZE));
+                        index++;
+                        path = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA));
+                        parentPath = new File(path).getParentFile().getName();//尝试一下使用getparent()
+                        tempFile = new File(path);
+                        modifyDate = tempFile.lastModified();
+                        size = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.SIZE));
                         if (Integer.valueOf(size) != 0) {
-                            String type = FileUtil.getFileType(path);
-                            String name = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.TITLE));
-                            String totlaTime = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DURATION));
-                            Bitmap map = Bitmap.createScaledBitmap(VideoUtil.getThumb(path), 100, 100, true);
+                            type = FileUtil.getFileType(path);
+                            name = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.TITLE));
+                            totlaTime = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DURATION));
+                            map = Bitmap.createScaledBitmap(VideoUtil.getThumb(path), 100, 100, true);
                             VideoInform infor = new VideoInform();
                             infor.setFileName(name);
                             infor.setType(type);
@@ -229,7 +239,10 @@ public class MultiMediaUtil {
                             }
                         }
 
-
+                        //如果获取到指定数量的视频 文件以后停止处理
+                        if (index == count) {
+                            break;
+                        }
                     }
                 }
                 cursor.close();
@@ -240,7 +253,7 @@ public class MultiMediaUtil {
                     handler.sendMessage(message);
 
             }
-        }).start();
+        });
 
 
     }
@@ -256,15 +269,14 @@ public class MultiMediaUtil {
 
         final HashMap<String, SendFileInform> pictureHashMap = new HashMap<String, SendFileInform>();
 
-        new Thread(new Runnable() {
+        MainActivity.sexecutorService.submit(new Runnable() {
             @Override
             public void run() {
-
                 Environment.getExternalStorageDirectory();
                 if (Environment.getExternalStorageDirectory().isDirectory()) {
                 }
             }
-        }).start();
+        });
         return pictureHashMap;
 
 

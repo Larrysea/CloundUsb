@@ -138,8 +138,7 @@ public class FileUtil {
     * */
     public static boolean checkSDCard() {
 
-        return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
-
+        return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED) && Environment.isExternalStorageRemovable();
     }
 
 
@@ -306,7 +305,7 @@ public class FileUtil {
         String type = getFileType(filename);
         String path = null;
         String externalpath = null;
-        boolean isscard = hasSDCard();//存在sdcard
+        boolean isscard = checkSDCard();//存在sdcard
         path = Environment.getExternalStorageDirectory().getAbsolutePath();//手机内置存储卡的位置
         externalpath = getStoragePath(GetContextUtil.getInstance(), true);
         File file;
@@ -352,17 +351,14 @@ public class FileUtil {
             } else {
                 path += "/xiechuan/音乐/";
             }
-        }else
-            if(type.equals("bmp")||type.equals("gif")||type.equals("jpg")||type.equals("jpeg")||type.equals("png"))
-            {
-                if (isscard) {
-                    externalpath += "/xiechuan/图片/";
-                } else {
-                    path += "/xiechuan/图片/";
-                }
-
+        } else if (type.equals("bmp") || type.equals("gif") || type.equals("jpg") || type.equals("jpeg") || type.equals("png")) {
+            if (isscard) {
+                externalpath += "/xiechuan/图片/";
+            } else {
+                path += "/xiechuan/图片/";
             }
-        else {
+
+        } else {
             if (isscard) {
                 externalpath += "/xiechuan/文件/";
             } else {
@@ -390,25 +386,7 @@ public class FileUtil {
 
     }
 
-    /*
-    * 检查是否存在外置sd卡
-    *
-    * 是返回true
-    *
-    * 否则false
-    * */
-    static public boolean hasSDCard() {
-        String path = null;
-        try {
-            path = android.os.SystemProperties.get("external_sd_path");
-        } catch (IllegalArgumentException e) {
-        }
-        if (path.equals("/storage/sdcard0")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+
 
     public byte[] readInputStream(InputStream inputStream) {
         byte buffer[] = new byte[1024];
@@ -479,12 +457,10 @@ public class FileUtil {
         try {
             fileOutputStream = new FileOutputStream(tempFile);
             TcpServer.fileLength = fileTotalLength;
-            while ((length = inputStream.read(buffer)) != -1)
-            {
+            while ((length = inputStream.read(buffer)) != -1) {
                 TcpServer.fileReceiveLength = fileSendLength += length;
                 fileOutputStream.write(buffer, 0, length);
-                if(TcpServer.fileLength==TcpServer.fileReceiveLength)
-                {
+                if (TcpServer.fileLength == TcpServer.fileReceiveLength) {
                     break;
                 }
                 if (updateProgressbarIn != null) {
@@ -492,10 +468,10 @@ public class FileUtil {
                 }
 
             }
-            Log.e(TAG+"TAGATG",length+"");
+            Log.e(TAG + "TAGATG", length + "");
             fileOutputStream.close();
         } catch (IOException e) {
-          Log.e(TAG,  e.getMessage()+"");
+            Log.e(TAG, e.getMessage() + "");
 
         }
 
@@ -563,9 +539,8 @@ public class FileUtil {
     }
 
 
-    static public String getFileNameFromPath(String path)
-    {
-        int postion =path.lastIndexOf("/");
+    static public String getFileNameFromPath(String path) {
+        int postion = path.lastIndexOf("/");
         return path.substring(postion);
     }
 
@@ -724,26 +699,17 @@ public class FileUtil {
     *
     *
     * */
-    static  public Bitmap getFilethumb(String filePath,Context context)
-    {
-        fileType=FileUtil.getFileType(filePath);
-        if(fileType.equals("apk"))
-        {
-            return  ApkSearchUtils.getApkThumb(filePath,context);
+    static public Bitmap getFilethumb(String filePath, Context context) {
+        fileType = FileUtil.getFileType(filePath);
+        if (fileType.equals("apk")) {
+            return ApkSearchUtils.getApkThumb(filePath, context);
 
         }
-        if(fileType.equals("bmp")||fileType.equals("gif")||fileType.equals("jpg")||fileType.equals("jpeg")||fileType.equals("png"))
-        {
-           return ImageLoader.getInstance().loadImageSync("file://"+filePath);
-        }
-        else
-           return  GraphicsUtil.drawableToBitmap(GetContextUtil.getInstance().getResources().getDrawable(R.mipmap.common_folder_default_icon));
+        if (fileType.equals("bmp") || fileType.equals("gif") || fileType.equals("jpg") || fileType.equals("jpeg") || fileType.equals("png")) {
+            return ImageLoader.getInstance().loadImageSync("file://" + filePath);
+        } else
+            return GraphicsUtil.drawableToBitmap(GetContextUtil.getInstance().getResources().getDrawable(R.mipmap.common_folder_default_icon));
     }
-
-
-
-
-
 
 
 }

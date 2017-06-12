@@ -3,11 +3,6 @@ package com.larry.cloundusb.cloundusb.fileutil;
 /**
  * Created by Larry on 5/24/2016.
  */
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.text.DecimalFormat;
 
 import android.app.ActivityManager;
 import android.content.Context;
@@ -16,6 +11,12 @@ import android.os.Environment;
 import android.os.StatFs;
 
 import com.larry.cloundusb.cloundusb.application.GetContextUtil;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.text.DecimalFormat;
 
 
 /*
@@ -85,20 +86,17 @@ public class FileSizeUtil {
      */
     public static long getTotalExternalMemorySize() {
 
-        long blockSize=0;
-        long totalBlocks=0;
+        long blockSize = 0;
+        long totalBlocks = 0;
         if (externalMemoryAvailable()) {
             File path = Environment.getExternalStorageDirectory();
             StatFs stat = new StatFs(path.getPath());
-            if(Build.VERSION.SDK_INT>18)
-            {
-                 blockSize = stat.getBlockSizeLong();
-                 totalBlocks = stat.getBlockCountLong();
-            }
-            else
-            {
-                blockSize=stat.getBlockSize();
-                totalBlocks=stat.getBlockCount();
+            if (Build.VERSION.SDK_INT > 18) {
+                blockSize = stat.getBlockSizeLong();
+                totalBlocks = stat.getBlockCountLong();
+            } else {
+                blockSize = stat.getBlockSize();
+                totalBlocks = stat.getBlockCount();
             }
 
             return totalBlocks * blockSize;
@@ -181,32 +179,33 @@ public class FileSizeUtil {
     *
     *
     * */
-  static  public double[] getExternalSDCardStafs(Context context,boolean isremoveable)
-    {
-        double blockSize=0;
-        double blockCount=0;
-        double []result=new double[2];
-        double blockFreeCount=0;
-        StatFs statfs=new StatFs(FileUtil.getStoragePath(context,isremoveable));
-        if(Build.VERSION.SDK_INT>18)
-        {
-            blockCount=statfs.getBlockCountLong();
-            blockSize=statfs.getBlockSizeLong();
-            blockFreeCount=statfs.getAvailableBlocksLong();
+    static public double[] getExternalSDCardStafs(Context context, boolean isremoveable) {
+        double blockSize = 0;
+        double blockCount = 0;
+        double[] result = new double[2];
+        double blockFreeCount = 0;
+        String path = FileUtil.getStoragePath(context, isremoveable);
+        if (path != null) {
+            StatFs statfs = new StatFs(path);
+            if (Build.VERSION.SDK_INT > 18) {
+                blockCount = statfs.getBlockCountLong();
+                blockSize = statfs.getBlockSizeLong();
+                blockFreeCount = statfs.getAvailableBlocksLong();
 
-        }else
-        {
-            blockCount=statfs.getBlockCount();
-            blockSize=statfs.getBlockSize();
-            blockFreeCount=statfs.getAvailableBlocks();
+            } else {
+                blockCount = statfs.getBlockCount();
+                blockSize = statfs.getBlockSize();
+                blockFreeCount = statfs.getAvailableBlocks();
+            }
+
+            result[0] = (blockCount * blockSize);
+            result[1] = (blockFreeCount * blockSize);
+            return result;
+        } else {
+            return null;
         }
 
-        result[0]=(blockCount*blockSize);
-        result[1]=(blockFreeCount*blockSize);
-        return result;
-
     }
-
 
 
     /*
@@ -218,28 +217,26 @@ public class FileSizeUtil {
     * 第二个结果返回手机内部剩余存储大小
     *
     * */
-  static  public double[] getPhoneSDaCardStafs()
-    {
-        double result[]=new double[2];
-        result[0]=getTotalExternalMemorySize();
-        result[1]=getAvailableExternalMemorySize();
-        return  result;
+    static public double[] getPhoneSDaCardStafs() {
+        double result[] = new double[2];
+        result[0] = getTotalExternalMemorySize();
+        result[1] = getAvailableExternalMemorySize();
+        return result;
     }
 
-  static  public String sdCardstorageInfor()
-   {
+    static public String sdCardstorageInfor() {
 
-       double sdcardResult[]=FileSizeUtil.getExternalSDCardStafs(GetContextUtil.getInstance(),true);
-       return  FileSizeUtil.convertFileSize((long)sdcardResult[1])+"/"+FileSizeUtil.convertFileSize((long)sdcardResult[0]);
+        double sdcardResult[] = FileSizeUtil.getExternalSDCardStafs(GetContextUtil.getInstance(), true);
 
-   }
-    static public String phoneStorageInfor()
-    {
-        double phoneResult[]=FileSizeUtil.getPhoneSDaCardStafs();
-        return FileSizeUtil.convertFileSize((long)phoneResult[1])+"/"+FileSizeUtil.convertFileSize((long)phoneResult[0]);
+        return FileSizeUtil.convertFileSize((long) sdcardResult[1]) + "/" + FileSizeUtil.convertFileSize((long) sdcardResult[0]);
 
     }
 
+    static public String phoneStorageInfor() {
+        double phoneResult[] = FileSizeUtil.getPhoneSDaCardStafs();
+        return FileSizeUtil.convertFileSize((long) phoneResult[1]) + "/" + FileSizeUtil.convertFileSize((long) phoneResult[0]);
+
+    }
 
 
 }

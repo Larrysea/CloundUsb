@@ -1,42 +1,32 @@
 package com.larry.cloundusb.cloundusb.fragment;
 
 import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.android.internal.http.multipart.MultipartEntity;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.larry.cloundusb.R;
-import com.larry.cloundusb.cloundusb.adapter.MusicGroupAdapter;
 import com.larry.cloundusb.cloundusb.adapter.VideoGroupAdapter;
-import com.larry.cloundusb.cloundusb.application.GetContextUtil;
 import com.larry.cloundusb.cloundusb.baseclass.SendFileInform;
 import com.larry.cloundusb.cloundusb.baseclass.VideoInform;
 import com.larry.cloundusb.cloundusb.fileutil.MultiMediaUtil;
 import com.larry.cloundusb.cloundusb.util.DividerItemDecoration;
-import com.larry.cloundusb.cloundusb.fileutil.VideoUtil;
-import com.larry.cloundusb.cloundusb.util.GraphicsUtil;
 import com.larry.cloundusb.cloundusb.view.ContextMenuDialog;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -56,13 +46,13 @@ public class VideoFragment extends Fragment {
     static Context mcontext;
     ProgressDialog mprogressDialog;
     HashMap<String, VideoInform> videoHashMap;//保存所有视频文件信息的hashmap
-    RecyclerView videoRecyclerView;   //展示视频的recycerView
+    XRecyclerView videoRecyclerView;   //展示视频的recycerView
 
     List<VideoInform> videoList;
-    static final int SCAN_VIDEO=3;//扫描视频文件的标记
+    static final int SCAN_VIDEO = 3;//扫描视频文件的标记
     Bundle mbundle;
     FragmentManager fragmentManager;
-     public  Handler handler = new Handler() {
+    public Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
 
@@ -71,10 +61,10 @@ public class VideoFragment extends Fragment {
                 case SCAN_oK:
                     mprogressDialog.dismiss();
                     videoList = subgroupVideo(videoHashMap);
-                    if (videoList!= null) {
+                    if (videoList != null) {
                         VideoGroupAdapter madapeter = new VideoGroupAdapter
                                 (mcontext, videoList);
-                        Log.e("显示数据的大小",videoList.size()+" ");
+                        Log.e("显示数据的大小", videoList.size() + " ");
                         madapeter.setOnItemClickListener(new VideoGroupAdapter.clickListener() {
                             @Override
                             public void onItemClick(View v, int position) {
@@ -85,42 +75,40 @@ public class VideoFragment extends Fragment {
                                 intent.setDataAndType(uri, "video/mp4");
                                 startActivity(intent);
                             }
+
                             @Override
                             public void onItemLongClick(View v, int position) {
-                                ContextMenuDialog contextMenuDialog= new ContextMenuDialog();
-                                SendFileInform sendFileInform=new SendFileInform();
+                                ContextMenuDialog contextMenuDialog = new ContextMenuDialog();
+                                SendFileInform sendFileInform = new SendFileInform();
                                 sendFileInform.setPath(videoList.get(position).getAbsPath());
                                 sendFileInform.setName(videoList.get(position).getFileName());
                                 sendFileInform.setFilesize(Long.parseLong(videoList.get(position).getFileSize()));
                                 sendFileInform.setType(videoList.get(position).getType());
-                                mbundle.putParcelable("copyfileinform",sendFileInform);
+                                mbundle.putParcelable("copyfileinform", sendFileInform);
                                 contextMenuDialog.setArguments(mbundle);
-                                contextMenuDialog.show(fragmentManager,"tag");
+                                contextMenuDialog.show(fragmentManager, "tag");
 
                             }
                         });
                         videoRecyclerView.setAdapter(madapeter);
-                    }
-                    else{
-                        if(videoList==null)
-                        {
-                            FragmentTransaction transaction=getFragmentManager().beginTransaction();
-                            NoContentFragment noContentFragment=new NoContentFragment();
-                            Bundle bundle=new Bundle();
-                            bundle.putString("contentInfor",getContext().getString(R.string.noVideoContentInfor));
+                    } else {
+                        if (videoList == null) {
+                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                            NoContentFragment noContentFragment = new NoContentFragment();
+                            Bundle bundle = new Bundle();
+                            bundle.putString("contentInfor", getContext().getString(R.string.noVideoContentInfor));
                             noContentFragment.setArguments(bundle);
-                            transaction.replace(R.id.video_group_linearlayout,noContentFragment);
+                            transaction.replace(R.id.video_group_linearlayout, noContentFragment);
                             transaction.commit();
                         }
                     }
 
-                break;
+                    break;
 
                 case SCAN_VIDEO:
-                    videoHashMap=(HashMap<String, VideoInform>) msg.obj;
-
+                    videoHashMap = (HashMap<String, VideoInform>) msg.obj;
                     handler.sendEmptyMessage(SCAN_oK);
-                     break;
+                    break;
             }
 
         }
@@ -133,9 +121,21 @@ public class VideoFragment extends Fragment {
 
         View convertView = inflater.inflate(R.layout.video_fragment, container, false);
         mcontext = getContext();
-        videoRecyclerView = (RecyclerView) convertView.findViewById(R.id.recyclerviewVideo);
+        videoRecyclerView = (XRecyclerView) convertView.findViewById(R.id.recyclerviewVideo);
         videoRecyclerView.setLayoutManager(new LinearLayoutManager(mcontext));
         videoRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
+        videoRecyclerView.setLoadingMoreEnabled(true);
+        videoRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+
+            }
+
+            @Override
+            public void onLoadMore() {
+
+            }
+        });
         init();
         return convertView;
 
@@ -152,19 +152,15 @@ public class VideoFragment extends Fragment {
         }
         mprogressDialog = ProgressDialog.show(getContext(), null, "稍等");
 
-       if(MultiMediaUtil.videoHashMap!=null&&MultiMediaUtil.videoHashMap.size()>0)
-       {
-           videoHashMap= MultiMediaUtil.videoHashMap;
-           handler.sendEmptyMessage(SCAN_oK);
-           
-       }
-        else
-       {
-           MultiMediaUtil.scanVideo(handler);
-       }
-        fragmentManager=getFragmentManager();
-        mbundle = new Bundle();
+        if (MultiMediaUtil.videoHashMap != null && MultiMediaUtil.videoHashMap.size() > 0) {
+            videoHashMap = MultiMediaUtil.videoHashMap;
+            handler.sendEmptyMessage(SCAN_oK);
 
+        } else {
+            MultiMediaUtil.scanVideo(handler, 8);
+        }
+        fragmentManager = getFragmentManager();
+        mbundle = new Bundle();
 
 
     }
@@ -192,11 +188,6 @@ public class VideoFragment extends Fragment {
     public interface ItemClickListener {
         void ItemClick(List<String> list);
     }
-
-
-
-
-
 
 
 }
