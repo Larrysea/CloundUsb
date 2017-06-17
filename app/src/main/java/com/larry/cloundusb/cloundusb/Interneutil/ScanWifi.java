@@ -9,12 +9,10 @@ import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.os.Environment;
 import android.util.Log;
 
 import com.larry.cloundusb.cloundusb.application.GetContextUtil;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +53,7 @@ public class ScanWifi implements Runnable {
     *
     * */
     public ScanWifi() {
-        wifiManager = (WifiManager) GetContextUtil.getInstance().getSystemService(Context.WIFI_SERVICE);
+        wifiManager = (WifiManager) GetContextUtil.getInstance().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         wifiReceiver = new WifiReceiver();
 
 
@@ -99,27 +97,25 @@ public class ScanWifi implements Runnable {
     /*连接到热点*/
     static public void connectToHotpot(String wifiName, String wifiPassword) {
 
-        if (passableHotsPot == null || passableHotsPot.size() == 0)
+        if (passableHotsPot == null || passableHotsPot.size() == 0) {
             passableHotsPot = new ArrayList<String>();
+        }
         ConnectivityManager connectivityManager = (ConnectivityManager) GetContextUtil.getInstance().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo wifinfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         WifiAdmin admin = new WifiAdmin(GetContextUtil.getInstance());
         WifiInfo contenInfo = wifiManager.getConnectionInfo();
 
-      /*  if(wifinfo.isConnectedOrConnecting())
-        {
-            Log.e("断开连接","close"+contenInfo.getNetworkId());
+        if (wifinfo.isConnectedOrConnecting()) {
+            Log.e("断开连接", "close" + contenInfo.getNetworkId());
             admin.disconnectWifi(contenInfo.getNetworkId());
-            //admin.closeWifi();
+            admin.closeWifi();
 
-        }*/
+        }
         admin.openWifi();
         admin.addNetwork(admin.CreateWifiInfo(wifiName, wifiPassword, 3));
         isConnected = true;
-        // admin.getIPAddress();
-        //String address=InternetTool.intToIp(admin.getIPAddress());
+
         Log.e("喜爱是收到的ip", InternetTool.intToIp(admin.getIPAddress()) + "");
-        String.valueOf(InternetTool.intToIp(admin.getIPAddress()));
 
     }
 

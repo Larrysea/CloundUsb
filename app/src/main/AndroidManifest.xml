@@ -9,13 +9,12 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        tools:replace="android:icon"
-        android:theme="@style/AppTheme">   <!--   name 将此类声明为系统的类-->
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon">   <!--   name 将此类声明为系统的类-->
         <activity
-            android:launchMode="singleInstance"
             android:name=".cloundusb.activity.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -24,52 +23,30 @@
         </activity>
         <activity android:name=".cloundusb.activity.SendFileActivity" />       <!--发送文件类-->
         <activity android:name=".cloundusb.testactivity.ClientActivity" />
-        <activity android:name=".cloundusb.activity.SendProgressActivity"
-            android:launchMode="singleInstance"/>   <!--显示文件进度类-->
+        <activity
+            android:name=".cloundusb.activity.SendProgressActivity"
+            android:launchMode="singleInstance" />   <!--显示文件进度类-->
         <activity android:name=".cloundusb.activity.SelectContactActivity" />   <!--  选择联系人发送-->
-        <activity
-            android:name=".cloundusb.activity.FeedBackActivitiy"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".cloundusb.activity.SettingActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".cloundusb.activity.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".cloundusb.activity.RegisterActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".cloundusb.activity.FeedBackActivitiy" />
+        <activity android:name=".cloundusb.activity.SettingActivity" />
+        <activity android:name=".cloundusb.activity.LoginActivity" />
+        <activity android:name=".cloundusb.activity.RegisterActivity" />
 
         <service android:name=".cloundusb.service.CheckNetWorkStateServices" />  <!--检查网络服务-->
-        <activity
-            android:name=".cloundusb.activity.InforActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".cloundusb.qractivity.CaptureActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
+        <activity android:name=".cloundusb.activity.InforActivity" />
+        <activity android:name=".cloundusb.qractivity.CaptureActivity" />
         <activity android:name=".cloundusb.qractivity.ResultActivity" />
-        <activity
-            android:name=".cloundusb.activity.PersonalSettingActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".cloundusb.activity.CheckUsbActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".cloundusb.activity.CopyFileActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".cloundusb.activity.CheckHistoryActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
-        <activity android:name=".cloundusb.activity.SyncPictureActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".cloundusb.activity.SyncProgressActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
+        <activity android:name=".cloundusb.activity.PersonalSettingActivity" />
+        <activity android:name=".cloundusb.activity.CheckUsbActivity" />
+        <activity android:name=".cloundusb.activity.CopyFileActivity" />
+        <activity android:name=".cloundusb.activity.CheckHistoryActivity" />
+        <activity android:name=".cloundusb.activity.SyncPictureActivity" />
+        <activity android:name=".cloundusb.activity.SyncProgressActivity" />
+        <activity android:name=".cloundusb.activity.CheckPictureActivity" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:required="true" />
@@ -103,6 +80,9 @@
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!--使用wifi自建热点时需要的权限，android 7.0系统需要-->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
 
 </manifest>

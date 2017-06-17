@@ -39,7 +39,7 @@ public class CopyFileUtil {
 
 
     public static String getMcopyFile() {
-        return mcopyFile;
+        return copyFileList.get(0).getPath();
     }
 
     public static void setMcopyFile(String mcopyFile) {
@@ -190,7 +190,7 @@ public class CopyFileUtil {
 
     }
 
-   static public void storageCopyFile(String path) {
+    static public void storageCopyFile(String path) {
         if (path != null) {
             mcopyFile = path;
         }

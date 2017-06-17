@@ -1,5 +1,6 @@
 package com.larry.cloundusb.cloundusb.fragment;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,12 +20,9 @@ import android.widget.Toast;
 
 import com.gc.materialdesign.views.ButtonFloat;
 import com.larry.cloundusb.R;
-import com.larry.cloundusb.cloundusb.Interneutil.HotSpotUtil;
 import com.larry.cloundusb.cloundusb.Interneutil.InternetTool;
 import com.larry.cloundusb.cloundusb.Interneutil.UdpReceive;
-import com.larry.cloundusb.cloundusb.Interneutil.WifiAdmin;
 import com.larry.cloundusb.cloundusb.Interneutil.WifiUtil;
-import com.larry.cloundusb.cloundusb.activity.MainActivity;
 import com.larry.cloundusb.cloundusb.activity.SelectContactActivity;
 import com.larry.cloundusb.cloundusb.activity.SendProgressActivity;
 import com.larry.cloundusb.cloundusb.activity.SyncPictureActivity;
@@ -34,11 +32,14 @@ import com.larry.cloundusb.cloundusb.application.GetContextUtil;
 import com.larry.cloundusb.cloundusb.baseclass.ImageBean;
 import com.larry.cloundusb.cloundusb.baseclass.SendContactInfo;
 import com.larry.cloundusb.cloundusb.fileutil.FileBox;
-import com.larry.cloundusb.cloundusb.util.CommonUtil;
 import com.larry.cloundusb.cloundusb.util.SlidingTabLayout;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import rx.functions.Action0;
+import rx.functions.Action1;
 
 
 /**
@@ -59,7 +60,7 @@ public class ParentFragment extends Fragment {
     Intent sendProGressIntent;  //发送文件进度的intent
     static addFileInterFace maddFileInterface;
     int oldFileLength;       //旧的文件长度
-
+    final static String TAG = ParentFragment.class.toString();
 
     public static Handler handler = new Handler(GetContextUtil.getInstance().getMainLooper()) {
         @Override
@@ -194,15 +195,15 @@ public class ParentFragment extends Fragment {
         @Override
         public void onClick(View view) {
 
-            if (InternetTool.JudgeWifiState(GetContextUtil.getInstance())||WifiUtil.isWifiApEnabled(GetContextUtil.getInstance())) {
+            if (InternetTool.JudgeWifiState(GetContextUtil.getInstance()) || WifiUtil.isWifiApEnabled(GetContextUtil.getInstance())) {
                 if (FileBox.getInstance().getSendListSize() == 0) {
                     Toast.makeText(GetContextUtil.getInstance(), "请选择文件发送！", Toast.LENGTH_SHORT).show();
 
-                } else {
-                /*
-                * 判断有几个接受者，如果是多和接受者的话，则进行选择
-                *
-                * */
+                }
+                //已经选择发送文件的情况
+                else {
+
+                    //   判断有几个接受者，如果是多和接受者的话，则进行选择
                     if (UdpReceive.getSendContactInforList() != null) {
 
                         if (UdpReceive.getSendContactInforList().size() == 1) {
@@ -216,31 +217,63 @@ public class ParentFragment extends Fragment {
                             intent.setClass(getActivity(), SelectContactActivity.class);
                             startActivity(intent);
 
-                        }
-                     /*   else if (WifiUtil.readClientList() != null) {
+                        } else if (WifiUtil.readClientList() != null) {
                             if (WifiUtil.readClientList().size() == 1) {
-                                startSendProgressActivity(3);
+                                //代表是自己创建wifi热点的情况
+                                startSendProgressActivity(4);
                             }
                         } else {
                             Toast.makeText(GetContextUtil.getInstance(), "稍等一会等待好友连接", Toast.LENGTH_SHORT).show();
 
-                        }*/
+                        }
                     }
-
-
                 }
-
 
             } else   //没有打开wifi的情况
             {
-                if(!WifiUtil.isWifiApEnabled(GetContextUtil.getInstance()))
-                {
+                RxPermissions rxPermissions = new RxPermissions(getActivity());
+                rxPermissions.setLogging(true);
+                rxPermissions.request(Manifest.permission.CHANGE_NETWORK_STATE,
+                        Manifest.permission.CHANGE_WIFI_STATE,
+                        Manifest.permission.WRITE_SETTINGS).
+                        subscribe(new Action1<Boolean>() {
+                            @Override
+                            public void call(Boolean aBoolean) {
+                                if (aBoolean) {
+                                    if (!WifiUtil.isWifiApEnabled(GetContextUtil.getInstance())) {
+                                        Intent intent = new Intent(getActivity(), SyncPictureActivity.class);
+                                        intent.putExtra("recent_hours", 0);
+                                        intent.putExtra("call_type", 2);  //代表是没有wifi调用
+                                        getActivity().startActivity(intent);
+                                    }
+                                } else {
+                                    Toast.makeText(getActivity(), "拒绝将无法传输文件", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                        }, new Action1<Throwable>() {
+                            @Override
+                            public void call(Throwable throwable) {
+                                Log.e(TAG, throwable.getMessage());
+                                Toast.makeText(getActivity(), "异常了", Toast.LENGTH_SHORT).show();
+                            }
+                        }, new Action0() {
+                            @Override
+                            public void call() {
+
+                                Toast.makeText(getActivity(), "打开热点成功准备文件传输", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+
+
+               /* if (!WifiUtil.isWifiApEnabled(GetContextUtil.getInstance())) {
                     Intent intent = new Intent(getActivity(), SyncPictureActivity.class);
-                    intent.putExtra("recent_hours",0);
-                    intent.putExtra("call_type",2);  //代表是没有wifi调用
+                    intent.putExtra("recent_hours", 0);
+                    intent.putExtra("call_type", 2);  //代表是没有wifi调用
                     getActivity().startActivity(intent);
 
-                }
+                }*/
 
 
             }
@@ -264,23 +297,19 @@ public class ParentFragment extends Fragment {
                 @Override
                 public void run() {
                     try {
-
                         sendProGressIntent = new Intent(GetContextUtil.getInstance(), SendProgressActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putInt("type", startType);
                         sendProGressIntent.putExtras(bundle);
                         startActivity(sendProGressIntent);
                         oldFileLength = FileBox.getInstance().getSendListSize();
-                        if(maddFileInterface!=null)
-                        {
+                        if (maddFileInterface != null) {
                             maddFileInterface.addFile(oldFileLength);
                         }
 
-
-
                     } catch (Exception e) {
 
-                        Log.e("抓到错误", e.getCause() + " "+e.getMessage());
+                        Log.e("抓到错误", e.getCause() + " " + e.getMessage());
                     }
 
                 }

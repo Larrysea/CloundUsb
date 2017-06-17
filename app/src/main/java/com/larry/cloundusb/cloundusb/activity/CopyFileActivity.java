@@ -1,38 +1,23 @@
 package com.larry.cloundusb.cloundusb.activity;
 
-import android.app.ProgressDialog;
-import android.graphics.PorterDuff;
-import android.os.AsyncTask;
 import android.os.Bundle;
-
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.widget.ProgressBar;
 import android.widget.Toast;
-
 
 import com.larry.cloundusb.R;
 import com.larry.cloundusb.cloundusb.application.GetContextUtil;
-import com.larry.cloundusb.cloundusb.baseclass.CopyFile;
 import com.larry.cloundusb.cloundusb.baseclass.SendFileInform;
 import com.larry.cloundusb.cloundusb.fileutil.CopyFileUtil;
-import com.larry.cloundusb.cloundusb.fileutil.FileUtil;
 import com.larry.cloundusb.cloundusb.fragment.CopyFileFragment;
 import com.larry.cloundusb.cloundusb.fragment.FileChooserPathFragment;
 
-import org.apache.commons.io.FileUtils;
-
 import java.io.File;
-import java.io.IOException;
-import java.util.List;
 
 /**
  * Created by Larry on 6/17/2016.
@@ -99,12 +84,12 @@ public class CopyFileActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        File srcFile = new File(CopyFileUtil.getMcopyFile());
         if (id == R.id.action_paste) {
 
-                if( android.os.FileUtils.copyFile(new File(CopyFileUtil.getMcopyFile()),new File(FileChoosePathFragment.nowPath)))
-                {
-                    Toast.makeText(this,"复制文件成功",Toast.LENGTH_SHORT).show();
-                }
+            if (android.os.FileUtils.copyFile(srcFile, new File(FileChoosePathFragment.nowPath + "/" + srcFile.getName()))) {
+                Toast.makeText(this, "复制文件成功", Toast.LENGTH_SHORT).show();
+            }
 
 
         }

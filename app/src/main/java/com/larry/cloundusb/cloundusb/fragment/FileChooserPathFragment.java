@@ -96,7 +96,6 @@ public class FileChooserPathFragment extends BackHandledFragment implements Copy
         mfragmantager = getFragmentManager();
         mprogressdialog = ProgressDialog.show(getActivity(), null, "一会就好!");
         msendFileInformList = getData(getArguments().getInt("type"));
-        ContextMenuDialog contextMenuDialog = new ContextMenuDialog();
         madapter = new FileChoosePathAdapter(GetContextUtil.getInstance(), msendFileInformList);
         mrecyclerview = (RecyclerView) view.findViewById(R.id.file_chooser_path_fragment_recyclerview);
         mrecyclerview.setLayoutManager(new LinearLayoutManager(GetContextUtil.getInstance()));

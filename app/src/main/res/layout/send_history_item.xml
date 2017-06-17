@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
@@ -18,36 +19,38 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:background="@drawable/portrait_drawable"
+        android:src="@mipmap/default_portrait" />
 
-        />
-    <TextView android:id="@+id/send_history_sender_name_tv"
+    <TextView
+        android:id="@+id/send_history_sender_name_tv"
         android:layout_width="wrap_content"
-        android:layout_below="@+id/send_history_sender_portrait_iv"
         android:layout_height="wrap_content"
-        android:text="larry"
+        android:layout_alignEnd="@+id/send_history_sender_portrait_iv"
+        android:layout_alignStart="@id/send_history_sender_portrait_iv"
+        android:layout_below="@+id/send_history_sender_portrait_iv"
         android:layout_marginTop="15dp"
         android:gravity="center"
-        android:textSize="13sp"
         android:singleLine="true"
-        android:layout_alignStart="@id/send_history_sender_portrait_iv"
-        android:layout_alignEnd="@+id/send_history_sender_portrait_iv"
-        />
+        android:text="larry"
+        android:textSize="13sp" />
 
-    <TextView android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/send_history_time_tv"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="--06月07日--"
         android:gravity="center"
-        android:id="@+id/send_history_time_tv"/>
+        android:text="--06月07日--" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="120dp"
-        android:layout_marginTop="30dp"
+        android:layout_alignEnd="@+id/send_history_time_tv"
         android:layout_below="@id/send_history_time_tv"
 
-        android:background="@mipmap/send_background"
-        android:layout_alignEnd="@+id/send_history_time_tv"
-        android:layout_toEndOf="@+id/send_history_sender_portrait_iv">
+        android:layout_marginTop="30dp"
+        android:layout_toEndOf="@+id/send_history_sender_portrait_iv"
+        android:background="@mipmap/send_background">
 
         <ImageView
             android:id="@+id/send_history_file_portrait_imageview"
@@ -56,9 +59,9 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="30dp"
             android:layout_toRightOf="@+id/check_usb_imageview"
+            android:scaleType="fitXY"
             android:src="@mipmap/ic_launcher"
             android:textColor="@color/black"
-            android:scaleType="fitXY"
             android:textSize="15sp" />
 
 
@@ -66,37 +69,36 @@
             android:id="@+id/send_history_file_name_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/send_history_file_portrait_imageview"
             android:layout_marginLeft="20dp"
-            android:text="@string/about_infor"
+            android:layout_toEndOf="@+id/send_history_file_portrait_imageview"
             android:textColor="@color/black"
             android:textSize="14sp"
-            android:layout_toEndOf="@+id/send_history_file_portrait_imageview"
-            android:layout_alignTop="@+id/send_history_file_portrait_imageview"
-             />
+            tools:text="@string/about_infor" />
 
         <Button
+            android:id="@+id/send_history_open_button"
             android:layout_width="50dp"
             android:layout_height="30dp"
+            android:layout_alignBottom="@+id/send_history_file_portrait_imageview"
+            android:layout_alignParentEnd="true"
             android:layout_gravity="center_vertical"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/check_history_corner_button"
             android:text="@string/opne"
-            android:layout_marginEnd="10dp"
-            android:textSize="13sp"
             android:textColor="@color/white"
-            android:id="@+id/send_history_open_button"
-            android:layout_alignBottom="@+id/send_history_file_portrait_imageview"
-            android:layout_alignParentEnd="true" />
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/send_history_file_size_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/send_history_file_name_tv"
-            android:text="23mb"
-            android:textSize="12sp"
-
             android:layout_alignBottom="@+id/send_history_open_button"
-            android:layout_alignStart="@+id/send_history_file_name_tv" />
+            android:layout_alignEnd="@+id/send_history_file_name_tv"
+            android:layout_alignStart="@+id/send_history_file_name_tv"
+            android:textColor="@color/blue"
+            android:textSize="12sp"
+            tools:text="23mb" />
 
 
     </RelativeLayout>

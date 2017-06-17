@@ -21,9 +21,7 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.larry.cloundusb.R;
-import com.larry.cloundusb.cloundusb.Interneutil.HotSpotUtil;
 import com.larry.cloundusb.cloundusb.Interneutil.SyncPitctureUtil;
-import com.larry.cloundusb.cloundusb.Interneutil.UdpReceive;
 import com.larry.cloundusb.cloundusb.Interneutil.WifiAdmin;
 import com.larry.cloundusb.cloundusb.Interneutil.WifiUtil;
 import com.larry.cloundusb.cloundusb.application.GetContextUtil;
@@ -31,6 +29,7 @@ import com.larry.cloundusb.cloundusb.util.CommonUtil;
 import com.larry.cloundusb.cloundusb.view.RoundPB;
 
 import java.util.Hashtable;
+
 
 /**
  * Created by LARRYSEA on 2016/7/18.
@@ -73,16 +72,17 @@ public class SyncPictureActivity extends AppCompatActivity {
                     startButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            if(startButton.getText().equals("开始发送"))
-                            {
+                            //扫码发送文件的activity
+                            if (startButton.getText().equals("开始发送")) {
                                 Intent sendProGressIntent = new Intent(GetContextUtil.getInstance(), SendProgressActivity.class);
                                 Bundle bundle = new Bundle();
                                 bundle.putInt("type", 1);
-                                sendProGressIntent.putExtra("type",1);
+                                sendProGressIntent.putExtra("type", 1);
                                 sendProGressIntent.putExtras(bundle);
                                 startActivity(sendProGressIntent);
-                            }else
-                            {
+                            }
+                            //同步照片的activity
+                            else {
                                 msyncPictureActivity.finish();
                                 mintent = new Intent(new Intent(SyncPictureActivity.this, SyncProgressActivity.class));
                                 mintent.putExtra("call_type", 2);
@@ -93,11 +93,10 @@ public class SyncPictureActivity extends AppCompatActivity {
                         }
                     });
                     try {
-                        imageView.setImageBitmap(create2DCode("三桥|北大街|5",CommonUtil.getScreenSizeOfDevice2(SyncPictureActivity.this)));
-                       // imageView.setImageBitmap(create2DCode(wifiName + "]http://www.aceclound.cn/aceclound/apk/android.apkhttp://www.aceclound.cn/aceclound/apk/android.apk", CommonUtil.getScreenSizeOfDevice2(msyncPictureActivity)));  //设置二维码
+                         imageView.setImageBitmap(create2DCode(wifiName + "]http://www.aceclound.cn/aceclound/apk/android.apkhttp://www.aceclound.cn/aceclound/apk/android.apk", CommonUtil.getScreenSizeOfDevice2(msyncPictureActivity)));  //设置二维码
 
                     } catch (com.google.zxing.WriterException e) {
-
+                        e.printStackTrace();
                     }
                     break;
             }
@@ -152,11 +151,10 @@ public class SyncPictureActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sync_picture);
         recentHours = getIntent().getIntExtra("recent_hours", 0);
-        wifiAdmin=new WifiAdmin(this);
+        wifiAdmin = new WifiAdmin(this);
         wifiName = "TaA" + wifiAdmin.getLastThreMac() + CommonUtil.getPhoneName() + "]" + recentHours;
         initComponent();
         msyncPictureActivity = this;
-
 
 
     }
@@ -167,7 +165,6 @@ public class SyncPictureActivity extends AppCompatActivity {
     * */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // TODO Auto-generated method stub
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
@@ -182,7 +179,7 @@ public class SyncPictureActivity extends AppCompatActivity {
     * */
     public void initComponent() {
 
-        msyncUtil = new SyncPitctureUtil(Environment.getExternalStorageDirectory().getAbsolutePath() + "/xiechuan/测试/", 2,handler);//手机内置存储卡的位置);
+        msyncUtil = new SyncPitctureUtil(Environment.getExternalStorageDirectory().getAbsolutePath() + "/xiechuan/测试/", 2, handler);//手机内置存储卡的位置);
         MainActivity.sexecutorService.submit(msyncUtil);
         activity_sync_picture_tv = (TextView) findViewById(R.id.activity_sync_picture_tv);
         startButton = (Button) findViewById(R.id.activity_sync_start_btn);
@@ -198,15 +195,14 @@ public class SyncPictureActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                WifiUtil.openWifi(wifiName, wifiPassword);
+                WifiUtil.openWifi(SyncPictureActivity.this, wifiName, wifiPassword);
                 while (!wifiIsOpen) {
-
                     progress += 5;
                     try {
                         Thread.sleep(200);
                     } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
-
                     roundPB.setProgress(progress);
                     if (WifiUtil.isWifiApEnabled(GetContextUtil.getInstance())) {
                         roundPB.setProgress(100);
@@ -222,8 +218,6 @@ public class SyncPictureActivity extends AppCompatActivity {
         MainActivity.sexecutorService.execute(receive);*/
 
     }
-
-
 
 
 }

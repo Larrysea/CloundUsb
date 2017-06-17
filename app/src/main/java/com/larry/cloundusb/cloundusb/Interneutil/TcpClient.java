@@ -422,9 +422,13 @@ public class TcpClient implements Runnable {
                 ip = UdpReceive.getSendContactInforList().get(0).getIpAddress();
             }
         } else if (fromtype == 4) {
-            ip = "192.168.43.61";
+            if (WifiUtil.readClientList() != null && WifiUtil.readClientList().size() > 0) {
+                ip = WifiUtil.readClientList().get(0);
+            }
         } else if (fromtype == 2) {
-            ip = UdpReceive.getSendContactInforList().get(0).getIpAddress();
+            if (UdpReceive.getSendContactInforList().size() > 0) {
+                ip = UdpReceive.getSendContactInforList().get(0).getIpAddress();
+            }
         }
         try {
             connectedDevice = InetAddress.getByName(ip);

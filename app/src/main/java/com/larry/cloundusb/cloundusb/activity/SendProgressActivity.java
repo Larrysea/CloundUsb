@@ -20,6 +20,7 @@ import com.larry.cloundusb.cloundusb.Interneutil.InternetTool;
 import com.larry.cloundusb.cloundusb.Interneutil.TcpClient;
 import com.larry.cloundusb.cloundusb.Interneutil.TcpServer;
 import com.larry.cloundusb.cloundusb.Interneutil.UdpReceive;
+import com.larry.cloundusb.cloundusb.Interneutil.WifiUtil;
 import com.larry.cloundusb.cloundusb.adapter.SendProgressAdapter;
 import com.larry.cloundusb.cloundusb.appinterface.recyclerviewClickListener;
 import com.larry.cloundusb.cloundusb.appinterface.updateProgressbarInterface;
@@ -100,7 +101,7 @@ public class SendProgressActivity extends AppCompatActivity implements ParentFra
     @Override
     public void onCreate(Bundle savedinstance) {
         super.onCreate(savedinstance);
-       // supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+        // supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_send);
         initCompanet();
         Log.e(TAG, "显示静茹了send pro oncereate");
@@ -127,16 +128,10 @@ public class SendProgressActivity extends AppCompatActivity implements ParentFra
         judgeFrom(getIntent().getExtras().getInt("type"));
         if (sourcceType == 1 || sourcceType == 3) {
             withdrawtv.setVisibility(View.VISIBLE);
-            if (sourcceType == 1) {
-
+            if (sourcceType == 1 && UdpReceive.getSendContactInforList().size() > 1) {
                 withdrawtv.setText(GetContextUtil.getInstance().getString(R.string.send_to) + UdpReceive.getSendContactInforList().get(0).getName() + " " +
                         GetContextUtil.getInstance().getString(R.string.click_cancel));
-
-
-            } else {
-
             }
-
         }
 
         withdrawtv.setOnClickListener(new View.OnClickListener() {
@@ -203,7 +198,14 @@ public class SendProgressActivity extends AppCompatActivity implements ParentFra
                         Log.e(TAG, "运行tcp client");
                         oldFileLength = FileBox.getInstance().getSendListSize();
                         MainActivity.tcpClient = new TcpClient();
-                        MainActivity.tcpClient.setConnecteIpFrom(2);
+                        //代表自己创建热点的情况
+                        if (WifiUtil.readClientList().size() > 0) {
+                            MainActivity.tcpClient.setConnecteIpFrom(4);
+                        }
+                        //代表来自局域网的情况
+                        else {
+                            MainActivity.tcpClient.setConnecteIpFrom(2);
+                        }
                         MainActivity.sexecutorService.submit(MainActivity.tcpClient);
                     }
                 }).start();
@@ -257,6 +259,11 @@ public class SendProgressActivity extends AppCompatActivity implements ParentFra
         } else if (type == 3) {
             adapterList = FileBox.getSendList();
             sourcceType = 3;
+        }
+        //创建热点并且是发送方
+        else if (type == 4) {
+            adapterList = FileBox.getSendList();
+            sourcceType = 1;
         }
         adapter = new SendProgressAdapter(GetContextUtil.getInstance(), adapterList);
 
@@ -340,8 +347,7 @@ public class SendProgressActivity extends AppCompatActivity implements ParentFra
                                 try {
                                     Thread.sleep(100);
                                 } catch (InterruptedException e) {
-
-
+                                    e.printStackTrace();
                                 }
                             }
                             if (percent == 100) {

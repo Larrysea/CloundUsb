@@ -21,7 +21,7 @@ import java.io.IOException;
 /**
  * Created by LARRYSEA on 2016/6/23.
  */
-public class SendHistoryFragment extends BackHandledFragment  implements  SendHistoryAdapter.clickListener {
+public class SendHistoryFragment extends BackHandledFragment implements SendHistoryAdapter.clickListener {
     RecyclerView recyclerView;
     SendHistoryAdapter sendHistoryAdapter;
     DB_AceClound db_aceClound;
@@ -37,9 +37,9 @@ public class SendHistoryFragment extends BackHandledFragment  implements  SendHi
 
 
     public void initView(View view) {
-        db_aceClound=new DB_AceClound(GetContextUtil.getInstance());
-        sendHistoryAdapter=new SendHistoryAdapter(db_aceClound.GetHistoryTFInfo(1));
-        recyclerView=(RecyclerView)view.findViewById(R.id.send_history_recyclerview);
+        db_aceClound = new DB_AceClound(GetContextUtil.getInstance());
+        sendHistoryAdapter = new SendHistoryAdapter(db_aceClound.GetHistoryTFInfo(1));
+        recyclerView = (RecyclerView) view.findViewById(R.id.send_history_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(GetContextUtil.getInstance()));
         recyclerView.setAdapter(sendHistoryAdapter);
         sendHistoryAdapter.setOnClickListener(this);
@@ -49,13 +49,12 @@ public class SendHistoryFragment extends BackHandledFragment  implements  SendHi
     @Override
     public void onClicK(View view, int position) {
 
-        String path=db_aceClound.GetHistoryTFInfo(1).get(position).getTFFilePath();
-        File file=new File(path);
-        try{
-          file.createNewFile();
-        }catch (IOException e)
-        {
-
+        String path = db_aceClound.GetHistoryTFInfo(1).get(position).getTFFilePath();
+        File file = new File(path);
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         FileUtil.openFile(file);
 

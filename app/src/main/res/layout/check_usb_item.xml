@@ -1,32 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:padding="20dp"
-    android:background="@color/white"
-    android:layout_height="wrap_content">
-    <TextView android:layout_width="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        tools:text="应用名称"
+        android:id="@+id/check_usb_item_name_tv"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-         android:singleLine="true"
-        android:textSize="17sp"
-        android:id="@+id/check_usb_item_name_tv"/>
-    <TextView android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textSize="17sp" />
+
+    <TextView
+        tools:text="20mb"
+        android:textColor="@color/black"
         android:id="@+id/check_usb_item_size_tv"
-        android:textSize="15sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/check_usb_item_name_tv"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/check_usb_item_name_tv"/>
-    <ProgressBar android:layout_width="200dp"
+        android:textSize="15sp" />
+
+    <ProgressBar
+        android:id="@+id/usb_item_progressbar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/check_usb_item_size_tv"
-       android:layout_marginStart="80dp"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:id="@+id/usb_item_progressbar"/>
-    <TextView android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_marginStart="80dp" />
 
-        android:background="@mipmap/ic_download"
+    <TextView
+        android:id="@+id/check_usb_item_download_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:id="@+id/check_usb_item_download_image"/>
+        android:background="@mipmap/ic_download" />
 
 </RelativeLayout>

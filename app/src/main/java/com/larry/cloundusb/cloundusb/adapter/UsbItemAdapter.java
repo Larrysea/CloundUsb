@@ -65,9 +65,9 @@ public class UsbItemAdapter extends RecyclerView.Adapter<UsbItemAdapter.viewHold
             @Override
             public void onClick(View v) {
                 if (!(holder.imagview.getText().toString().trim()).equals(GetContextUtil.getInstance().getString(R.string.open))) {
-                    mlistener.onItemClick(holder.itemView,position,1);//表示下载文件
+                    mlistener.onItemClick(holder.itemView, position, 1);//表示下载文件
                 } else {
-                    mlistener.onItemClick(holder.itemView, position,2);  //表示打开文件
+                    mlistener.onItemClick(holder.itemView, position, 2);  //表示打开文件
                 }
 
 
@@ -78,7 +78,7 @@ public class UsbItemAdapter extends RecyclerView.Adapter<UsbItemAdapter.viewHold
 
     @Override
     public int getItemCount() {
-        return msendFileInfromList==null?0:msendFileInfromList.size();
+        return msendFileInfromList == null ? 0 : msendFileInfromList.size();
     }
 
     public void setRecyclerListener(recyclerListener listener) {
@@ -87,7 +87,7 @@ public class UsbItemAdapter extends RecyclerView.Adapter<UsbItemAdapter.viewHold
 
 
     public interface recyclerListener {
-        void onItemClick(View view, int position,int type);
+        void onItemClick(View view, int position, int type);
 
         void onItemLongClick(View view, int position);
 

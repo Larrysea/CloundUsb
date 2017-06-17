@@ -231,7 +231,7 @@ public  class WifiAdmin {
 
 
     public  String getConnectWifiSsid(){
-        WifiManager wifiManager = (WifiManager) GetContextUtil.getInstance().getSystemService(Context.WIFI_SERVICE);
+        WifiManager wifiManager = (WifiManager) GetContextUtil.getInstance().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
        // Log.d("wifiInfo", wifiInfo.toString());
        // Log.d("SSID",wifiInfo.getSSID());

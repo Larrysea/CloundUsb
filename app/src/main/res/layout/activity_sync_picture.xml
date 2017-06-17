@@ -13,47 +13,46 @@
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentTop="true"
         android:background="?attr/colorPrimary"
-        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+        android:theme="@style/ActionMenuWhiteTitle" />
 
 
     <com.larry.cloundusb.cloundusb.view.RoundPB
         android:id="@+id/activity_sync_picture_round_pb"
-        android:layout_gravity="center"
-        android:layout_centerInParent="true"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
         android_custom:centerIcon="@mipmap/ic_open_wifi"
         android_custom:counterClickWise="true"
-        android_custom:startPoint="0"
         android_custom:roundColor="@android:color/white"
         android_custom:roundProgressColor="@android:color/holo_orange_dark"
         android_custom:roundWidth="5dp"
+        android_custom:startPoint="0"
 
 
         />
 
 
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/qr_activity_linearlayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:paddingRight="10dp"
-        android:paddingLeft="10dp"
+        android:background="@drawable/qr_bg_corner"
         android:gravity="center"
         android:orientation="vertical"
-        android:background="@drawable/qr_bg_corner">
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:visibility="gone">
 
         <ImageView
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
             android:id="@+id/activity_sync_imageview"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp" />
     </LinearLayout>
 
     <Button
@@ -65,22 +64,21 @@
         android:layout_marginBottom="40dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:visibility="gone"
-      android:text="@string/start_sync_picture"
-        />
+        android:text="@string/start_sync_picture"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/activity_sync_picture_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/qr_activity_linearlayout"
+        android:layout_centerHorizontal="true"
         android:gravity="center"
         android:padding="5dp"
         android:text="@string/tip_enter_picture_sync"
         android:textColor="@color/black"
         android:textSize="18sp"
-        android:visibility="gone"
-        android:layout_alignBottom="@+id/qr_activity_linearlayout"
-        android:layout_centerHorizontal="true" />
+        android:visibility="gone" />
 
 
 </RelativeLayout>

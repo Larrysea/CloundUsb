@@ -15,10 +15,6 @@
  */
 package com.larry.cloundusb.cloundusb.qractivity;
 
-import java.io.IOException;
-import java.lang.reflect.Field;
-
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -43,16 +39,17 @@ import com.google.zxing.Result;
 import com.larry.cloundusb.R;
 import com.larry.cloundusb.cloundusb.Interneutil.ScanWifi;
 import com.larry.cloundusb.cloundusb.Interneutil.loginUtil;
-
 import com.larry.cloundusb.cloundusb.activity.MainActivity;
 import com.larry.cloundusb.cloundusb.activity.RegisterActivity;
-import com.larry.cloundusb.cloundusb.activity.SyncProgressActivity;
 import com.larry.cloundusb.cloundusb.application.GetContextUtil;
 import com.larry.cloundusb.cloundusb.qrcamera.CameraManager;
 import com.larry.cloundusb.cloundusb.qrdecode.DecodeThread;
 import com.larry.cloundusb.cloundusb.qrutils.BeepManager;
 import com.larry.cloundusb.cloundusb.qrutils.CaptureActivityHandler;
 import com.larry.cloundusb.cloundusb.qrutils.InactivityTimer;
+
+import java.io.IOException;
+import java.lang.reflect.Field;
 
 /**
  * This activity opens the camera and does the actual scanning on a background
@@ -202,29 +199,19 @@ public final class CaptureActivity extends AppCompatActivity implements SurfaceH
         bundle.putInt("height", mCropRect.height());
         bundle.putString("result", rawResult.getText());
 
-        String scanInfor = rawResult.getText().toString().trim();
+        String scanInfor = rawResult.getText().trim();
+        //手机开热点进行文件传输的情况
         if (scanInfor.length() > 45) {
-            if (scanInfor.substring(0, 2).equals("Ta")) {
             ScanWifi.connectToHotpot(scanInfor.split("\\]")[0] + "]" + scanInfor.split("\\]")[1], "123456789");
-            Intent intent = new Intent(this, SyncProgressActivity.class);
-            intent.putExtra("recent_hours", Integer.valueOf(scanInfor.split("\\]")[1]));
-            intent.putExtra("call_type", 1);
-            if (Integer.valueOf(scanInfor.split("\\]")[1]) > 0) {
-                startActivity(intent);
-            }
-            this.finish();
-
-            }
-
-        } else {
-
+        }
+        //扫码登录的activity
+        else {
             if (MainActivity.user.isLogin()) {
                 loginUtil.scanLogin(MainActivity.user.getUserId(), rawResult.getText());
                 this.finish();
             } else {
                 Toast.makeText(CaptureActivity.this, "请先登录！", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(this, RegisterActivity.class));
-
             }
 
         }

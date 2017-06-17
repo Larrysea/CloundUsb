@@ -220,9 +220,7 @@ public class MultiMediaUtil {
                     uri = MediaStore.Video.Media.INTERNAL_CONTENT_URI;
                     int index = 0;
                     if (cursor != null) {
-                        if (!cursor.moveToPosition(startPosition)) {
-                            return;
-                        }
+                        cursor.moveToPosition(startPosition-1);
                         while (cursor.moveToNext()) {
                             index++;
                             path = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA));
@@ -256,17 +254,28 @@ public class MultiMediaUtil {
                     }
                 }
                 cursor.close();
-                Message message = new Message();
-                message.obj = videoInformList;
-                message.what = SCAN_VIDEO;
-                if (handler != null)
-                    handler.sendMessage(message);
+                sendScanOverSignal(handler);
 
             }
         });
 
 
     }
+
+    /**
+     * @param handler 发送信息的handler
+     */
+    public static void sendScanOverSignal(final Handler handler) {
+
+        Message message = new Message();
+        message.obj = videoInformList;
+        message.what = SCAN_VIDEO;
+        if (handler != null)
+            handler.sendMessage(message);
+
+    }
+
+
 
     /*
     * 获取手机所有的文档类型文件  包括 ppt  doc xls pdf xls  xlsx docx

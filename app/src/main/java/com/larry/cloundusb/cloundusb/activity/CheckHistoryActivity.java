@@ -1,8 +1,5 @@
 package com.larry.cloundusb.cloundusb.activity;
 
-import android.app.Activity;
-
-
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -11,13 +8,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RadioButton;
 
 import com.larry.cloundusb.R;
-import com.larry.cloundusb.cloundusb.adapter.ReceiveHistoryAdapter;
-import com.larry.cloundusb.cloundusb.adapter.SelectContactItemAdapter;
 import com.larry.cloundusb.cloundusb.application.GetContextUtil;
-import com.larry.cloundusb.cloundusb.baseclass.CopyFile;
 import com.larry.cloundusb.cloundusb.database.DB_AceClound;
 import com.larry.cloundusb.cloundusb.fragment.ReceiveHistoryFragment;
 import com.larry.cloundusb.cloundusb.fragment.SendHistoryFragment;
@@ -35,6 +28,7 @@ public class CheckHistoryActivity extends AppCompatActivity {
     Button sendButton;                                 //发送按钮
     Button receiveButton;                              //接收按钮
     clickListener mclickListener;                      //监听器
+
     @Override
     public void onCreate(Bundle savedInsatanceState) {
         super.onCreate(savedInsatanceState);
@@ -50,11 +44,11 @@ public class CheckHistoryActivity extends AppCompatActivity {
     * */
     public void initComponent() {
         myToolbar = (Toolbar) findViewById(R.id.check_history_toolbar);
-        receiveButton=(Button) findViewById(R.id.activity_check_receive_button);
-        sendButton=(Button)findViewById(R.id.activity_check_send_button);
+        receiveButton = (Button) findViewById(R.id.activity_check_receive_button);
+        sendButton = (Button) findViewById(R.id.activity_check_send_button);
         receiveButton.setBackgroundResource(R.drawable.check_history_left_circle_button);
         receiveButton.setTextColor(getResources().getColor(R.color.white));
-        mclickListener=new clickListener();
+        mclickListener = new clickListener();
         receiveButton.setOnClickListener(mclickListener);
         sendButton.setOnClickListener(mclickListener);
         myToolbar.setTitle(GetContextUtil.getInstance().getString(R.string.chech_history));
@@ -62,10 +56,11 @@ public class CheckHistoryActivity extends AppCompatActivity {
         myToolbar.setNavigationIcon(R.mipmap.arrow_back_white_small);
         setSupportActionBar(myToolbar);
         receiveButton.setSelected(true);
-        receiveHistoryFragment=new ReceiveHistoryFragment();
+        receiveHistoryFragment = new ReceiveHistoryFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.activity_check_history_container, receiveHistoryFragment);
         fragmentTransaction.commit();
+
     }
 
 
@@ -100,10 +95,11 @@ public class CheckHistoryActivity extends AppCompatActivity {
                     receiveButton.setBackgroundResource(R.drawable.check_history_left_white_button);
                     receiveButton.setTextColor(getResources().getColor(R.color.blue));
                     sendButton.setTextColor(getResources().getColor(R.color.white));
-                    sendHistoryFragment=new SendHistoryFragment();
+                    if (sendHistoryFragment == null) {
+                        sendHistoryFragment = new SendHistoryFragment();
+                    }
                     fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.activity_check_history_container, sendHistoryFragment);
-                    fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
                     break;
                 case R.id.activity_check_receive_button:
@@ -111,10 +107,11 @@ public class CheckHistoryActivity extends AppCompatActivity {
                     receiveButton.setBackgroundResource(R.drawable.check_history_left_circle_button);
                     receiveButton.setTextColor(getResources().getColor(R.color.white));
                     sendButton.setTextColor(getResources().getColor(R.color.blue));
-                    receiveHistoryFragment=new ReceiveHistoryFragment();
-                    fragmentTransaction=getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.activity_check_history_container,receiveHistoryFragment);
-                    fragmentTransaction.addToBackStack(null);
+                    if (receiveHistoryFragment == null) {
+                        receiveHistoryFragment = new ReceiveHistoryFragment();
+                    }
+                    fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.activity_check_history_container, receiveHistoryFragment);
                     fragmentTransaction.commit();
                     break;
             }

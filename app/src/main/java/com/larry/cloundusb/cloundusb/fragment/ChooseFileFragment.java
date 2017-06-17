@@ -57,6 +57,8 @@ public class ChooseFileFragment extends BackHandledFragment {
     LinearLayout mlinearLayout;
     public static showLinearLayout mshowLinearLayout;
 
+    double phoneResult[];
+    double sdcardResult[];
 
     Handler handler = new Handler() {
 
@@ -100,7 +102,8 @@ public class ChooseFileFragment extends BackHandledFragment {
         phoneStorage = (LinearLayout) view.findViewById(R.id.choose_file_fragment_phone_linearlayout);
         sdCardStorage = (LinearLayout) view.findViewById(R.id.choose_file_fragment_card_linearlayout);
         mlinearLayout = (LinearLayout) view.findViewById(R.id.choose_file_fragment_linearlayout);
-        if (FileUtil.checkSDCard()) {
+        sdcardResult = FileSizeUtil.getExternalSDCardStafs(GetContextUtil.getInstance(), true);
+        if (FileUtil.isExternalStorageAvailable() && sdcardResult != null) {
             sdCardStorage.setVisibility(View.VISIBLE);
         }
         documentLinearLayout = (LinearLayout) view.findViewById(R.id.choose_file_fragment_docunment_lineatlayout);
@@ -128,9 +131,8 @@ public class ChooseFileFragment extends BackHandledFragment {
                     ebookAmountTextView.setText(String.valueOf(amount[1]) + getResources().getString(R.string.file_unit));
                     zipAmountTextview.setText(String.valueOf(amount[2]) + getResources().getString(R.string.file_unit));
                     Log.e(FileSizeUtil.getTotalMemorySize(GetContextUtil.getInstance()) + "", "  ");
-                    double phoneResult[] = FileSizeUtil.getPhoneSDaCardStafs();
-                    double sdcardResult[] = FileSizeUtil.getExternalSDCardStafs(GetContextUtil.getInstance(), true);
-                    if (FileUtil.checkSDCard()) {
+                    phoneResult = FileSizeUtil.getPhoneSDaCardStafs();
+                    if (FileUtil.isExternalStorageAvailable() && sdcardResult != null) {
                         sdCardAmountTextView.setText(FileSizeUtil.convertFileSize((long) sdcardResult[1]) + "/" + FileSizeUtil.convertFileSize((long) sdcardResult[0]));
                         sdCardProgrssBar.setProgress((int) (100 * (sdcardResult[0] - sdcardResult[1]) / sdcardResult[0]));
                     }

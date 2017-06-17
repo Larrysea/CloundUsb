@@ -1,9 +1,6 @@
 package com.larry.cloundusb.cloundusb.activity;
 
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -30,7 +27,6 @@ import com.larry.cloundusb.cloundusb.Interneutil.TcpClient;
 import com.larry.cloundusb.cloundusb.Interneutil.loginUtil;
 import com.larry.cloundusb.cloundusb.application.GetContextUtil;
 import com.larry.cloundusb.cloundusb.baseclass.User;
-import com.larry.cloundusb.cloundusb.broadcast.NetworkConnectChangedReceiver;
 import com.larry.cloundusb.cloundusb.config.config;
 import com.larry.cloundusb.cloundusb.fileutil.FileBox;
 import com.larry.cloundusb.cloundusb.fragment.ParentFragment;
@@ -59,7 +55,6 @@ public class MainActivity extends AppCompatActivity
             super.handleMessage(msg);
             switch (msg.what) {
                 case 1:
-
                     break;
                 case 2:
                     Intent intent = new Intent(GetContextUtil.getInstance(), SendProgressActivity.class);
@@ -87,7 +82,7 @@ public class MainActivity extends AppCompatActivity
 
                     break;
                 case 5:
-                  //  Toast.makeText(mainactivityInstance, "5555", Toast.LENGTH_SHORT).show();
+                    //  Toast.makeText(mainactivityInstance, "5555", Toast.LENGTH_SHORT).show();
 
                     break;
                 case 9:
@@ -245,7 +240,6 @@ public class MainActivity extends AppCompatActivity
 
 
         } else if (id == R.id.nav_picture_sync) {
-
             //  ViewUtil.showBottomSheetDialog(getLayoutInflater(),getWindow().getDecorView());
             SyncTimePicker customHeaderAndFooterPicker = new SyncTimePicker(this);
             customHeaderAndFooterPicker.setOffset(2);
@@ -263,7 +257,6 @@ public class MainActivity extends AppCompatActivity
                 }
             });
             customHeaderAndFooterPicker.show();
-
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -317,15 +310,13 @@ public class MainActivity extends AppCompatActivity
         }
 
 
-
-
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         stopService(checkNetWorkServices);
-        // sexecutorService.shutdown();
+        sexecutorService.shutdown();
 
 
     }
@@ -352,21 +343,15 @@ public class MainActivity extends AppCompatActivity
             }
         });
         mainactivityInstance = this;
-        CommonUtil.getScreenSizeOfDevice2(this);
-        Log.e("Mainactivity", "");
 
 
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-
         if (event.getAction() == event.ACTION_DOWN) {
             onBackPressed();
-
         }
-
         return false;
     }
 
@@ -377,7 +362,6 @@ public class MainActivity extends AppCompatActivity
     public interface closeSendProgressActivity {
         void close();
     }
-
 
 
 }

@@ -5,14 +5,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
-import android.text.TextUtils;
-import android.util.Log;
-
-import com.larry.cloundusb.cloundusb.application.GetContextUtil;
-import com.larry.cloundusb.cloundusb.baseclass.SendContactInfo;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -31,18 +25,19 @@ public class WifiUtil {
     static WifiManager wifiManager;                                    //wifimanager用来获取wifimanager的服务
     static public boolean Openflag = false;                            //判断是否带来热点，已经打开则为true 否则为false
     static ArrayList<String> connectedIP = new ArrayList<String>();         // 已连接上的设备
+    static final String TAG = WifiUtil.class.toString();
 
 
     /*
     *
     * 调用openwifi打开热点
     * */
-    static public void openWifi(String wifiName, String wifiPassword) {
+    static public void openWifi(Context context, String wifiName, String wifiPassword) {
 
-        wifiManager = (WifiManager) GetContextUtil.getInstance().getSystemService(Context.WIFI_SERVICE);
+        wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
         //如果是打开状态就关闭，如果是关闭就打开
-        if (Openflag == false) {
+        if (!Openflag) {
             Openflag = !Openflag;
             setWifiApEnabled(wifiName, wifiPassword, Openflag);
         }
@@ -52,15 +47,16 @@ public class WifiUtil {
 
     // wifi热点开关
     static public boolean setWifiApEnabled(String wifiName, String wifiPassword, boolean enabled) {
-        if (enabled) { // disable WiFi in any case
+        if (enabled) {
+            // disable WiFi in any case
             //wifi和热点不能同时打开，所以打开热点的时候需要关闭wifi
             wifiManager.setWifiEnabled(false);
             wifiManager.getWifiState();
         }
         try {
-
             return initHostSpotConfig(wifiName, wifiPassword, enabled);
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -82,11 +78,6 @@ public class WifiUtil {
 
         //热点的配置类
         WifiConfiguration netConfig = new WifiConfiguration();
-        //配置热点的名称(可以在名字后面加点随机数什么的)
-           /* apConfig.SSID = "YRCCONNECTION";
-            //配置热点的密码
-            apConfig.preSharedKey = "12122112";*/
-        //apConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
 
         //获取wifi管理服务
 
@@ -114,8 +105,6 @@ public class WifiUtil {
                 .set(WifiConfiguration.GroupCipher.CCMP);
         netConfig.allowedGroupCiphers
                 .set(WifiConfiguration.GroupCipher.TKIP);
-
-        TcpServer serverSocket = new TcpServer();
 
 
         return (Boolean) method.invoke(wifiManager, netConfig, enabled);
@@ -154,29 +143,22 @@ public class WifiUtil {
             String ipAddress;
             int waitTime;  //等待时间
             String[] splitted;
-            for(waitTime=0;waitTime<3;waitTime++)
-            {
+            for (waitTime = 0; waitTime < 3; waitTime++) {
                 while ((line = br.readLine()) != null) {
-                     splitted = line.split(" ");
+                    splitted = line.split(" ");
                     if (splitted != null && splitted.length >= 4) {
                         String ip = splitted[2];
-                        ipAddress=ip.substring(0,ip.lastIndexOf("."));
-                        if(ipAddress.equals("192.168.43"))
-                            if(connectedIP.size()==0)
-                            {
+                        ipAddress = ip.substring(0, ip.lastIndexOf("."));
+                        if (ipAddress.equals("192.168.43"))
+                            if (connectedIP.size() == 0) {
                                 connectedIP.add(ip);
-                            }else
-                            if(checkAddressIsAdded(ipAddress))
-                            {
+                            } else if (checkAddressIsAdded(ipAddress)) {
                                 connectedIP.add(ip);
                             }
-                        Log.e("dsda","dsad");
                     }
 
                 }
             }
-
-        } catch (FileNotFoundException e) {
 
         } catch (IOException e) {
 
@@ -190,21 +172,17 @@ public class WifiUtil {
     *
     *
     * */
-   static public boolean checkAddressIsAdded(String ipaddress)
-    {
-        boolean isadded=false;
-        for(String address:connectedIP)
-        {
-            if(address==ipaddress)
-                isadded=true;
+    static public boolean checkAddressIsAdded(String ipaddress) {
+        boolean isadded = false;
+        for (String address : connectedIP) {
+            if (address == ipaddress)
+                isadded = true;
 
         }
-       return isadded;
-
+        return isadded;
 
 
     }
-
 
 
     /*
@@ -219,14 +197,10 @@ public class WifiUtil {
     * */
     public static Boolean isWifiApEnabled(Context context) {
         try {
-            WifiManager manager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
+            WifiManager manager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
             Method method = manager.getClass().getMethod("isWifiApEnabled");
-            return (Boolean)method.invoke(manager);
-        }
-        catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e)  {
+            return (Boolean) method.invoke(manager);
+        } catch (NoSuchMethodException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             e.printStackTrace();
         }
         return false;
@@ -238,20 +212,15 @@ public class WifiUtil {
     *
     *
     * */
-    public static boolean isWifiConnected(Context context)
-    {
-        ConnectivityManager connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    public static boolean isWifiConnected(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo wifiNetworkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        if(wifiNetworkInfo.isConnected())
-        {
-            return true ;
+        if (wifiNetworkInfo.isConnected()) {
+            return true;
         }
 
-        return false ;
+        return false;
     }
-
-
-
 
 
 }

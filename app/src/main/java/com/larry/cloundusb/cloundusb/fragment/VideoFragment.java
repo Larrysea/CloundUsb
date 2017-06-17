@@ -89,6 +89,9 @@ public class VideoFragment extends Fragment {
 
                             }
                         });
+                        if (madapeter.getItemCount() < 6) {
+                            videoRecyclerView.setLoadingMoreEnabled(false);
+                        }
                         videoRecyclerView.setAdapter(madapeter);
                     } else {
                         if (mVideoList == null) {
