@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.view.animation.Animation;
 
 import com.larry.cloundusb.cloundusb.baseclass.FileHistoryInfo;
 import com.larry.cloundusb.cloundusb.util.CommonUtil;
@@ -14,16 +15,18 @@ import java.util.List;
 
 /**
  * Created by LARRYSEA on 2016/6/22.
- *
+ * <p>
  * 发送文件接收文件的数据库
- *
- *
  */
 public class DB_AceClound extends SQLiteOpenHelper {
 
     private final static String DATABASE_NAME = "AceClound.db";
     private final static int DATABASE_VERSION = 1;
     private final static String TABLE_NAME = "FileTFAccount";
+
+
+    Animation
+
 
     public DB_AceClound(Context context) {
         // TODO Auto-generated constructor stub
@@ -101,7 +104,7 @@ public class DB_AceClound extends SQLiteOpenHelper {
                     CommonUtil.FormatTimeToday(Long.parseLong(cursor.getString(6))),
                     cursor.getInt(7),
                     cursor.getInt(8));
-                    tflist.add(tfinfo);
+            tflist.add(tfinfo);
         }
         return tflist;
     }
